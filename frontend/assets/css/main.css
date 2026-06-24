@@ -1,14 +1,379 @@
-/* Minimal functional styling only — the definitive kiosk UI is delivered later. */
+@import "tailwindcss";
+
+/* Design-tokens uit het Figma/Bootstrap-design → genereren automatisch utilities
+   (bg-primary, text-muted, bg-form, rounded-cf, font-sans, …). */
+@theme {
+  --color-primary: #37743e; /* brand green */
+  --color-ink: #0d0d0d; /* near-black headings */
+  --color-muted: #666666; /* secondary text + lines */
+  --color-form: #f2f2f2; /* prompt input + facts band */
+  --color-card: #f5f5f5; /* result card + AI-denkt pill */
+  --color-skeleton: #d9d9d9; /* loading bars */
+  --color-energy: #d5b501; /* energy value (gold) */
+  --color-water: #5387d5; /* water value (blue) */
+  --color-cost: #027921; /* cost value (green) */
+  --color-icon: #33363f; /* line-icon color */
+  --color-dash: #b3b3b3; /* dashed process connector */
+  --color-error: #d12c23; /* validation message */
+
+  --radius-cf: 5px; /* → rounded-cf */
+
+  --font-sans:
+    "Bahnschrift", "Barlow", "DIN Next", "Segoe UI", system-ui, sans-serif;
+
+  /* Bootstrap-breakpoints exact overgenomen voor pixel-parity met het design. */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+}
+
+/* Barlow — vrije substituut voor Bahnschrift (Windows-only DIN-font). Bahnschrift
+   staat eerst in de stack zodat Windows-kiosks het origineel zien.
+   TODO: plaats de woff2-bestanden in frontend/public/fonts/ en haal onderstaande
+   @font-face-blokken uit commentaar. Zolang ze ontbreken valt de stack terug op
+   Bahnschrift (Windows) → systeemfont. */
+/*
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/barlow-light.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/barlow-regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/barlow-medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/barlow-semibold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/barlow-bold.woff2") format("woff2");
+}
+*/
+
+/* ---------------- Bespoke component-classes (afs-) ---------------- */
+
+/* Gecentreerde content-wrapper met responsieve marges (96 → 56 → 40 → 24px). */
+.afs-page-inner {
+  @apply mx-auto w-full max-w-[1728px] px-6 md:px-10 lg:px-14 xl:px-24;
+}
+
+/* Call-to-action knop (pijl rechts uitgelijnd). */
+.afs-btn-cf {
+  @apply flex h-[50px] w-[300px] max-w-full items-center justify-between
+         rounded-cf border-2 border-primary px-[18px] text-base font-normal
+         no-underline transition-colors duration-150;
+}
+.afs-btn-cf-primary {
+  @apply bg-primary text-white;
+}
+.afs-btn-cf-primary:hover {
+  background-color: #2e6234;
+}
+.afs-btn-cf-outline {
+  @apply bg-white text-primary;
+}
+.afs-btn-cf-outline:hover {
+  background-color: rgba(55, 116, 62, 0.06);
+}
+
+/* Gestreepte verticale connector achter de "AI Denkt..."-pill. */
+.afs-ai-connector::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 3px dashed var(--color-dash);
+}
+
+/* Sectie-koppen (gedeeld door de blokken op de challenger-/results-pagina's).
+   Marge wordt per gebruik gezet (mt-1 / mt-[13px]). */
+.afs-section-title {
+  @apply m-0 text-[clamp(34px,3.6vw,48.83px)] font-normal leading-[1.23] text-ink;
+}
+.afs-section-sub {
+  @apply mx-auto text-[clamp(18px,1.55vw,25px)] font-normal leading-[1.2]
+         text-muted;
+}
+
+/* "Verras me"-knop (breedte wordt per gebruik gezet). */
+.afs-btn-verras {
+  @apply inline-flex h-[50px] items-center justify-center gap-[6px] rounded-cf
+         border-2 border-primary bg-white text-base text-primary
+         transition-colors duration-150;
+}
+.afs-btn-verras:hover {
+  background-color: rgba(55, 116, 62, 0.06);
+}
+
+/* Metric-filtertabs op de resultatenpagina. */
+.afs-metric-tab {
+  @apply h-[39px] min-w-[125px] rounded-cf border-2 border-primary bg-white
+         px-4 text-[12.8px] font-normal text-primary transition-colors
+         duration-150;
+}
+.afs-metric-tab:hover {
+  background-color: rgba(55, 116, 62, 0.06);
+}
+/* --active staat ná de basis: wint bij gelijke specificiteit (bron-volgorde). */
+.afs-metric-tab--active {
+  @apply bg-primary text-white;
+}
+.afs-metric-tab--active:hover {
+  background-color: #2e6234;
+}
+
+/* Terug-knop (outline + gecentreerd, pijl links). Ná .afs-btn-cf gedefinieerd
+   zodat justify-center de justify-between van de basis overschrijft. */
+.afs-btn-cf-back {
+  @apply justify-center gap-3 bg-white text-primary;
+}
+.afs-btn-cf-back:hover {
+  background-color: rgba(55, 116, 62, 0.06);
+}
+
+/* Terug-naar-home knop (about): groen, pijl absoluut links, tekst gecentreerd.
+   Breedte wordt per gebruik gezet (w-full / w-[300px]). */
+.afs-btn-back {
+  @apply relative flex h-[52px] max-w-full items-center justify-center rounded-cf
+         bg-primary text-base text-white no-underline transition-colors
+         duration-150;
+}
+.afs-btn-back:hover {
+  background-color: #2e6234;
+}
+
+/* Leesbare tekstkolom voor contentpagina's (about). */
+.afs-prose section {
+  @apply mt-9;
+}
+.afs-prose h2 {
+  @apply mb-[14px] text-[clamp(22px,1.9vw,26px)] font-semibold text-ink;
+}
+.afs-prose p {
+  @apply mb-4 max-w-full text-base leading-[1.55] text-muted;
+}
+.afs-prose p:last-child {
+  @apply mb-0;
+}
+
+/* ================= Evolutie-AI ================= */
+
+/* Type scale (Figma px). */
+.afs-t-display {
+  @apply text-[clamp(36px,5vw,61px)] font-normal leading-none tracking-[0.2px] text-ink;
+}
+.afs-t-h2 {
+  @apply text-[clamp(24px,2.4vw,31.25px)] font-normal leading-[1.15] text-ink;
+}
+.afs-t-lead {
+  @apply text-[clamp(18px,1.6vw,25px)] font-normal leading-[1.35] text-muted;
+}
+.afs-t-body {
+  @apply text-[20px] font-normal leading-[1.4] text-muted;
+}
+.afs-t-cap {
+  @apply text-base font-normal leading-[1.4] text-muted;
+}
+.afs-t-src {
+  @apply text-[12.8px] font-normal leading-[1.35] text-muted;
+}
+
+/* Layout. */
+.afs-stage {
+  @apply mx-auto w-full max-w-[1720px];
+  padding-inline: clamp(16px, 4vw, 100px);
+}
+.afs-section {
+  padding-block: clamp(40px, 6vw, 90px);
+}
+.afs-section--flush-top {
+  padding-top: 0;
+}
+.afs-hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url("/img/evolutie-ai/bg-hero-art.svg") no-repeat right top;
+  background-size: contain;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Chips. */
+.afs-chip {
+  @apply inline-flex items-center justify-center rounded-cf bg-black px-[14px] py-[6px] text-[12.8px] leading-none text-white;
+}
+.afs-chip--lg {
+  @apply h-10 px-[18px] text-[20px];
+}
+.afs-chip--green {
+  @apply bg-primary;
+}
+
+/* Timeline year selector. */
+.afs-year-track {
+  @apply inline-flex h-[50px] items-center gap-[6px] rounded-[25px] bg-form p-[5px];
+}
+.afs-yr {
+  @apply inline-flex h-10 min-w-20 items-center justify-center rounded-[25px] text-[20px] text-muted;
+}
+.afs-yr--active {
+  @apply bg-primary text-white;
+}
+
+/* Process diagram (central hub + diagonal connectors). */
+.afs-process-box {
+  @apply inline-block rounded-cf bg-white px-7 pb-[26px] pt-5;
+}
+.afs-process {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px 90px;
+  width: max-content;
+  max-width: 100%;
+  padding: 26px 0;
+}
+.afs-process::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--color-muted) 50%, transparent calc(50% + 1px)),
+    linear-gradient(to bottom left, transparent calc(50% - 1px), var(--color-muted) 50%, transparent calc(50% + 1px));
+  opacity: 0.45;
+}
+.afs-process > .afs-chip {
+  position: relative;
+  z-index: 2;
+}
+.afs-process .afs-hub {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@media (max-width: 575.98px) {
+  .afs-process {
+    gap: 40px;
+  }
+  .afs-process .afs-hub {
+    position: static;
+    transform: none;
+    grid-column: 1 / -1;
+    justify-self: center;
+    order: -1;
+  }
+  .afs-process::before {
+    display: none;
+  }
+}
+
+/* Milestone progress bar. */
+.afs-progress-line {
+  @apply relative h-[7px] rounded-[7px];
+  background: #a8a3a3;
+}
+.afs-progress-line > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 95%;
+  @apply rounded-[7px] bg-primary;
+}
+
+/* Pager. */
+.afs-nav-square {
+  @apply inline-flex h-[50px] w-[50px] items-center justify-center rounded-cf bg-primary text-[25px] leading-none text-white no-underline;
+}
+.afs-dots {
+  @apply inline-flex items-center gap-[10px];
+}
+.afs-dots i {
+  @apply inline-block h-[10px] w-[10px] rounded-full;
+  background: #d2d2d2;
+}
+.afs-dots i.afs-on {
+  @apply bg-primary;
+}
+
+/* Training-cost table. */
+.afs-cost-table {
+  @apply w-full border-collapse rounded-cf bg-white;
+}
+.afs-cost-table th {
+  @apply px-[14px] py-[10px] text-left text-[20px] font-normal text-muted;
+}
+.afs-cost-table td {
+  @apply px-[14px] py-3 text-base text-black;
+}
+.afs-cost-table tbody tr + tr td {
+  border-top: 1px solid #e4e4e4;
+}
+
+/* Market-growth bar chart. */
+.afs-chart {
+  @apply flex items-end;
+  gap: clamp(12px, 2vw, 40px);
+  height: 340px;
+}
+.afs-chart .afs-col {
+  @apply flex h-full flex-1 flex-col justify-end;
+}
+.afs-bar {
+  @apply flex justify-center rounded-t-[6px] pt-[14px] text-[18px] font-medium text-ink;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.afs-bar--green {
+  @apply bg-primary text-white;
+}
+.afs-bar--proj {
+  @apply text-white;
+  background: repeating-linear-gradient(45deg, var(--color-primary) 0 9px, #ffffff 9px 18px);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------------- Bestaande globale regels ---------------- */
 
 * {
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #1a1a1a;
-  background: #f5f6f8;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #ffffff;
   line-height: 1.5;
 }
 

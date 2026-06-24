@@ -1,8 +1,13 @@
 // Nuxt configuration. See https://nuxt.com/docs/api/configuration/nuxt-config
 
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
   compatibilityDate: "2025-01-01",
   devtools: { enabled: true },
+
+  // @nuxt/test-utils for Vitest auto-import + composable support in tests.
+  modules: ["@nuxt/test-utils/module"],
 
   // Kiosk runs on port 3000 (Technical Design, security/firewall).
   devServer: { port: 3000 },
@@ -15,4 +20,9 @@ export default defineNuxtConfig({
   },
 
   css: ["~/assets/css/main.css"],
+
+  // Tailwind v4 via its Vite plugin (Nuxt runs on Vite; no tailwind.config.js needed).
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
