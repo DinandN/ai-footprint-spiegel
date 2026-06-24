@@ -16,9 +16,8 @@ const year = new Date().getFullYear();
         >Samen maken we AI Duurzamer</span
       >
       <div class="flex items-center gap-[11px]">
-        <!-- TODO: vervang '#' door de echte website-/social-URL's -->
         <a
-          href="#"
+          href="https://dilab.nl/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Website"
@@ -36,7 +35,7 @@ const year = new Date().getFullYear();
           </svg>
         </a>
         <a
-          href="#"
+          href="https://www.linkedin.com/company/zuydict/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
@@ -49,7 +48,7 @@ const year = new Date().getFullYear();
           </svg>
         </a>
         <a
-          href="#"
+          href="https://github.com/DinandN/ai-footprint-spiegel"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
