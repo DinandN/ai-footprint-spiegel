@@ -128,6 +128,14 @@
   background-color: rgba(55, 116, 62, 0.06);
 }
 
+/* Model-keuze dropdown op de challenger-kaart (native select, eigen chevron). */
+.afs-variant-select {
+  @apply w-full max-w-[300px] cursor-pointer appearance-none rounded-cf border-2
+         border-primary bg-white py-[7px] pl-[14px] pr-9 text-[20px] leading-none
+         text-ink transition-colors duration-150 hover:bg-primary/5
+         focus:outline-none;
+}
+
 /* Metric-filtertabs op de resultatenpagina. */
 .afs-metric-tab {
   @apply h-[39px] min-w-[125px] rounded-cf border-2 border-primary bg-white

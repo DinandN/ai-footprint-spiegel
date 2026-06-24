@@ -1,6 +1,14 @@
 <script setup lang="ts">
-// Step 1 of the compare flow: pick one or more models and enter the prompt,
-// then send the comparison and continue to the results page.
+// Step 1 of the compare flow: pick the models (one card per provider; switch the
+// variant within a provider with the chevron) and enter the prompt, then send
+// the comparison and continue to the results page.
+
+import type { Model } from "~/composables/useCompare";
+
+interface ProviderGroup {
+  provider: string;
+  variants: Model[];
+}
 
 const {
   models,
@@ -15,7 +23,47 @@ const {
 // Load the model list; fails silently if the back-end is not (yet) reachable.
 await loadModels().catch(() => {});
 
+const MIN_MODELS = 2;
 const MAX_CHARS = 2000;
+
+// One card per provider: group the flat model list, keeping the API order.
+const groups = computed<ProviderGroup[]>(() => {
+  const map = new Map<string, Model[]>();
+  for (const model of models.value) {
+    if (!map.has(model.provider)) map.set(model.provider, []);
+    map.get(model.provider)!.push(model);
+  }
+  return [...map.entries()].map(([provider, variants]) => ({ provider, variants }));
+});
+
+// Which variant is currently shown per provider (defaults to the first).
+const activeVariant = ref<Record<string, string>>({});
+watchEffect(() => {
+  for (const group of groups.value) {
+    if (!activeVariant.value[group.provider]) {
+      activeVariant.value[group.provider] = group.variants[0]?.id;
+    }
+  }
+});
+
+function activeModel(group: ProviderGroup): Model {
+  return (
+    group.variants.find((m) => m.id === activeVariant.value[group.provider]) ??
+    group.variants[0]
+  );
+}
+
+// Dropdown choice: make `id` the active variant of this provider. If the
+// provider was part of the comparison, move that selection to the new variant.
+function selectVariant(group: ProviderGroup, id: string) {
+  const current = activeModel(group);
+  if (current.id === id) return;
+  activeVariant.value[group.provider] = id;
+  if (selectedIds.value.includes(current.id)) {
+    toggleModel(current.id);
+    if (!selectedIds.value.includes(id)) toggleModel(id);
+  }
+}
 
 // Example prompts for the "Verras me" (surprise me) button.
 const EXAMPLES = [
@@ -27,7 +75,8 @@ const EXAMPLES = [
 ];
 
 const canSubmit = computed(
-  () => prompt.value.trim().length > 0 && selectedIds.value.length > 0,
+  () =>
+    prompt.value.trim().length > 0 && selectedIds.value.length >= MIN_MODELS,
 );
 
 function verrasMe() {
@@ -58,11 +107,13 @@ async function onSubmit() {
       class="mx-auto mt-10 flex max-w-[1560px] flex-wrap justify-center gap-[30px] lg:mt-[55px]"
     >
       <ModelSelectCard
-        v-for="model in models"
-        :key="model.id"
-        :model="model"
-        :selected="selectedIds.includes(model.id)"
-        @toggle="toggleModel(model.id)"
+        v-for="group in groups"
+        :key="group.provider"
+        :model="activeModel(group)"
+        :variants="group.variants"
+        :selected="selectedIds.includes(activeModel(group).id)"
+        @toggle="toggleModel(activeModel(group).id)"
+        @select-variant="selectVariant(group, $event)"
       />
     </div>
 
@@ -102,10 +153,10 @@ async function onSubmit() {
     <!-- Validatie + verzenden -->
     <div class="mt-[26px]">
       <p
-        v-if="selectedIds.length === 0"
+        v-if="selectedIds.length < MIN_MODELS"
         class="mb-[14px] text-base text-error"
       >
-        Selecteer Minimaal 1 AI-model
+        Selecteer minimaal {{ MIN_MODELS }} AI-modellen
       </p>
       <div class="flex justify-center">
         <button

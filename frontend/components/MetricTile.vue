@@ -22,38 +22,28 @@ defineProps<{ tile: TileVm }>();
       >{{ tile.label }}</span
     >
 
-    <!-- Kosten: 3-koloms muntraster; overige metrics: omloop van iconen. -->
+    <!-- Iconen in een compact, gecentreerd raster (max. 3 koloms, auto-breedte
+         zodat ze dicht op elkaar staan). place-content-center houdt het blok
+         gecentreerd en voorkomt dat de iconen uitrekken als de tegel hoger wordt. -->
     <div
-      v-if="tile.iconKind === 'coin'"
-      class="my-[10px] grid flex-1 grid-cols-3 place-content-center gap-x-[5px] gap-y-1"
+      class="my-[10px] grid flex-1 grid-cols-[repeat(3,auto)] place-content-center gap-x-[6px] gap-y-[5px]"
     >
-      <svg
-        v-for="n in tile.count"
-        :key="n"
-        class="block h-4 w-[22px]"
-        viewBox="0 0 16 16"
-      >
-        <use :href="`#${tile.iconId}`" />
-      </svg>
-    </div>
-    <div
-      v-else
-      class="my-[10px] flex max-w-[92px] flex-1 flex-wrap items-center justify-center gap-x-2 gap-y-[6px]"
-    >
-      <svg
-        v-for="n in tile.count"
-        :key="n"
-        class="block"
-        :class="{
-          'h-[26px] w-4': tile.iconKind === 'bolt',
-          'h-6 w-[22px]': tile.iconKind === 'drop',
-          'h-6 w-7 drop-shadow-[0_3px_3px_rgba(0,0,0,0.25)]':
-            tile.iconKind === 'cloud',
-        }"
-        viewBox="0 0 16 16"
-      >
-        <use :href="`#${tile.iconId}`" />
-      </svg>
+      <template v-for="n in tile.count" :key="n">
+        <IconWallet v-if="tile.iconKind === 'coin'" class="h-[22px] w-[22px]" />
+        <svg
+          v-else
+          class="block"
+          :class="{
+            'h-[26px] w-4': tile.iconKind === 'bolt',
+            'h-6 w-[22px]': tile.iconKind === 'drop',
+            'h-6 w-7 drop-shadow-[0_3px_3px_rgba(0,0,0,0.25)]':
+              tile.iconKind === 'cloud',
+          }"
+          viewBox="0 0 16 16"
+        >
+          <use :href="`#${tile.iconId}`" />
+        </svg>
+      </template>
     </div>
 
     <span

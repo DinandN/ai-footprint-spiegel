@@ -23,36 +23,88 @@ const ollamaModel: Model = {
   priceOutputPerMTokens: null,
 };
 
+const claudeOpus: Model = {
+  id: "claude-opus-4-8",
+  name: "Claude Opus 4.8",
+  provider: "anthropic",
+  type: "cloud",
+  pActiveBillions: 200,
+  priceInputPerMTokens: 5,
+  priceOutputPerMTokens: 25,
+};
+
+const claudeSonnet: Model = {
+  id: "claude-sonnet-4-6",
+  name: "Claude Sonnet 4.6",
+  provider: "anthropic",
+  type: "cloud",
+  pActiveBillions: 70,
+  priceInputPerMTokens: 3,
+  priceOutputPerMTokens: 15,
+};
+
 describe("components/ModelSelectCard.vue", () => {
   it("toont het merklogo voor een bekende provider", async () => {
     const wrapper = await mountSuspended(ModelSelectCard, {
-      props: { model: googleModel, selected: false },
+      props: { model: googleModel, variants: [googleModel], selected: false },
     });
     const img = wrapper.find("img");
     expect(img.exists()).toBe(true);
     expect(img.attributes("src")).toContain("gemini");
   });
 
-  it("valt terug op de modelnaam zonder logo (ollama)", async () => {
+  it("toont een logo voor Ollama-modellen", async () => {
     const wrapper = await mountSuspended(ModelSelectCard, {
-      props: { model: ollamaModel, selected: false },
+      props: { model: ollamaModel, variants: [ollamaModel], selected: false },
     });
-    expect(wrapper.find("img").exists()).toBe(false);
-    expect(wrapper.text()).toContain("Llama 3.2 3B");
+    expect(wrapper.find("img").attributes("src")).toContain("ollama");
   });
 
   it("reflecteert de selectie-state via aria-pressed", async () => {
     const wrapper = await mountSuspended(ModelSelectCard, {
-      props: { model: googleModel, selected: true },
+      props: { model: googleModel, variants: [googleModel], selected: true },
     });
-    expect(wrapper.get("button").attributes("aria-pressed")).toBe("true");
+    expect(wrapper.get("button[aria-pressed]").attributes("aria-pressed")).toBe(
+      "true",
+    );
   });
 
-  it("emit 'toggle' bij klik", async () => {
+  it("emit 'toggle' bij klik op de kaart", async () => {
     const wrapper = await mountSuspended(ModelSelectCard, {
-      props: { model: googleModel, selected: false },
+      props: { model: googleModel, variants: [googleModel], selected: false },
     });
-    await wrapper.get("button").trigger("click");
+    await wrapper.get("button[aria-pressed]").trigger("click");
     expect(wrapper.emitted("toggle")).toHaveLength(1);
+  });
+
+  it("toont een dropdown alleen bij meerdere varianten", async () => {
+    const one = await mountSuspended(ModelSelectCard, {
+      props: { model: claudeOpus, variants: [claudeOpus], selected: false },
+    });
+    expect(one.find("select").exists()).toBe(false);
+
+    const many = await mountSuspended(ModelSelectCard, {
+      props: {
+        model: claudeOpus,
+        variants: [claudeOpus, claudeSonnet],
+        selected: false,
+      },
+    });
+    const select = many.find("select");
+    expect(select.exists()).toBe(true);
+    expect(select.findAll("option")).toHaveLength(2);
+  });
+
+  it("emit 'select-variant' (niet 'toggle') bij een keuze in de dropdown", async () => {
+    const wrapper = await mountSuspended(ModelSelectCard, {
+      props: {
+        model: claudeOpus,
+        variants: [claudeOpus, claudeSonnet],
+        selected: false,
+      },
+    });
+    await wrapper.get("select").setValue("claude-sonnet-4-6");
+    expect(wrapper.emitted("select-variant")?.[0]).toEqual(["claude-sonnet-4-6"]);
+    expect(wrapper.emitted("toggle")).toBeUndefined();
   });
 });

@@ -5,6 +5,7 @@ import {
   formatValue,
   buildResultRows,
   championModelId,
+  metricPoints,
   METRICS,
 } from "~/utils/results";
 import type { CompareResult } from "~/composables/useCompare";
@@ -63,21 +64,41 @@ describe("utils/results", () => {
     expect(championModelId(list, "all")).toBeNull();
   });
 
-  it("buildResultRows levert tegels per geslaagd model en markeert de champion", () => {
+  it("buildResultRows zet de winnaar (laagste) bovenaan en markeert de champion", () => {
     const list = [
       result("a", "google", { energyWh: 5 }),
       result("b", "anthropic", { energyWh: 2 }),
     ];
     const rows = buildResultRows(list, "energy");
     expect(rows).toHaveLength(2);
+    expect(rows[0].modelId).toBe("b"); // laagste energie → bovenaan
+    expect(rows[1].modelId).toBe("a");
     expect(rows[0].tiles).toHaveLength(4);
-    expect(rows[0].logo).toContain("gemini");
+    expect(rows[0].logo).toContain("claude"); // b = anthropic
 
-    const energyA = rows[0].tiles.find((t) => t.key === "energy")!;
-    const energyB = rows[1].tiles.find((t) => t.key === "energy")!;
-    expect(energyA.active).toBe(true);
-    expect(energyB.champion).toBe(true); // b heeft de laagste energie
-    expect(energyA.champion).toBe(false);
+    const energyTop = rows[0].tiles.find((t) => t.key === "energy")!;
+    expect(energyTop.active).toBe(true);
+    expect(energyTop.champion).toBe(true); // de winnaar bovenaan is de champion
+  });
+
+  it("buildResultRows sorteert bij 'all' op totaalscore (hoogste bovenaan)", () => {
+    const list = [
+      result("a", "google", { energyWh: 5 }),
+      result("b", "anthropic", { energyWh: 2 }),
+    ];
+    const rows = buildResultRows(list, "all");
+    expect(rows[0].modelId).toBe("b"); // hoogste totaalscore bovenaan
+    expect(rows[1].modelId).toBe("a");
+  });
+
+  it("buildResultRows zet mislukte resultaten onderaan bij een actieve metric", () => {
+    const list = [
+      result("ok", "google", { energyWh: 5 }),
+      result("fail", "anthropic", null),
+    ];
+    const rows = buildResultRows(list, "energy");
+    expect(rows[0].modelId).toBe("ok");
+    expect(rows[1].modelId).toBe("fail");
   });
 
   it("buildResultRows geeft geen tegels voor een mislukt resultaat", () => {
@@ -85,5 +106,38 @@ describe("utils/results", () => {
     expect(rows[0].ok).toBe(false);
     expect(rows[0].tiles).toHaveLength(0);
     expect(rows[0].error).toBe("kapot");
+  });
+
+  it("metricPoints geeft 25 aan de beste en schaalt de rest naar het percentage", () => {
+    expect(metricPoints(2, 2)).toBe(25); // gelijk aan de beste
+    expect(metricPoints(4, 2)).toBe(12); // 2x zoveel verbruik → 50% → 12
+    expect(metricPoints(5, 0)).toBe(0); // beste verbruikt 0, jij niet → 0
+  });
+
+  it("buildResultRows berekent de gesummeerde score (max 100)", () => {
+    const list = [
+      result("best", "google", {
+        energyWh: 2,
+        waterMl: 2,
+        co2Grams: 2,
+        costEur: 2,
+      }),
+      result("half", "anthropic", {
+        energyWh: 4,
+        waterMl: 4,
+        co2Grams: 4,
+        costEur: 4,
+      }),
+    ];
+    const rows = buildResultRows(list, "all");
+    const best = rows.find((r) => r.modelId === "best")!;
+    const half = rows.find((r) => r.modelId === "half")!;
+    expect(best.score).toBe(100); // beste in alle 4 → 4 × 25
+    expect(half.score).toBe(48); // 50% in alle 4 → 4 × 12
+  });
+
+  it("buildResultRows geeft geen score aan een mislukt resultaat", () => {
+    const rows = buildResultRows([result("x", "google", null)], "all");
+    expect(rows[0].score).toBeNull();
   });
 });

@@ -17,6 +17,9 @@ const TABS: { key: MetricKey | "all"; label: string }[] = [
   { key: "cost", label: "Kosten" },
 ];
 
+// The four metric tabs (without "all") align above the four metric tiles.
+const metricTabs = TABS.filter((t) => t.key !== "all");
+
 const rows = computed(() => buildResultRows(results.value, activeMetric.value));
 
 async function onBack() {
@@ -39,18 +42,34 @@ async function onBack() {
 
     <template v-if="rows.length">
       <div class="mx-auto mt-7 max-w-[1250px] text-left lg:mt-[33px]">
-        <!-- Metric-filters -->
-        <div class="mb-7 flex flex-wrap justify-center gap-[18px]">
-          <button
-            v-for="tab in TABS"
-            :key="tab.key"
-            type="button"
-            class="afs-metric-tab"
-            :class="{ 'afs-metric-tab--active': activeMetric === tab.key }"
-            @click="activeMetric = tab.key"
+        <!-- Metric-filters: 'Alles' links (boven de respons-kaart); de vier
+             metric-tabs rechts, uitgelijnd boven hun tegels (zelfde breedte +
+             gap als de ResultRow-metrics). -->
+        <div class="mb-7 flex flex-wrap items-center gap-12 xl:flex-nowrap">
+          <div class="w-full xl:max-w-[600px] xl:flex-[1_1_560px]">
+            <button
+              type="button"
+              class="afs-metric-tab"
+              :class="{ 'afs-metric-tab--active': activeMetric === 'all' }"
+              @click="activeMetric = 'all'"
+            >
+              Alles (overzicht)
+            </button>
+          </div>
+          <div
+            class="flex w-full flex-wrap justify-center gap-4 xl:w-auto xl:flex-none xl:flex-nowrap xl:justify-end xl:gap-[33px]"
           >
-            {{ tab.label }}
-          </button>
+            <button
+              v-for="tab in metricTabs"
+              :key="tab.key"
+              type="button"
+              class="afs-metric-tab w-[125px]"
+              :class="{ 'afs-metric-tab--active': activeMetric === tab.key }"
+              @click="activeMetric = tab.key"
+            >
+              {{ tab.label }}
+            </button>
+          </div>
         </div>
 
         <!-- Model-rijen -->

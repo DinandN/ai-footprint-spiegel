@@ -5,8 +5,6 @@ hun **output** én hun **duurzaamheidsimpact** (energie, water, CO₂, kosten).
 Ontwikkeld als artefact voor het Lectoraat Data Intelligence (project _Optimize |
 Duurzame Technologie in Beeld_) — Zuyd Hogeschool.
 
-Dit is de eerste opzet (scaffold + kernlogica) op basis van het Technisch Ontwerp v1.0.0.
-
 ## Vergeleken modellen
 
 | Model | Provider | Type | P_active (mld) |
@@ -19,95 +17,87 @@ Dit is de eerste opzet (scaffold + kernlogica) op basis van het Technisch Ontwer
 | Llama 3.2 3B | Ollama (lokaal) | local | 3 (bekend) |
 | Qwen 2.5 3B | Ollama (lokaal) | local | 3 (bekend) |
 
-> Afwijking van het TO: het TO beschrijft acht modellen incl. **Gemini 2.5 Pro**.
-> Pro is bewust weggelaten omdat het geen gratis Google-tier heeft (gratis quota = 0)
-> en dus niet zonder betaalde billing te draaien is. De overige zeven modellen
-> dekken alle drie de providers en de drie grootteklassen (groot/middel/klein).
+> Gemini 2.5 Pro is bewust weggelaten: het heeft geen gratis Google-tier (gratis
+> quota = 0) en is dus niet zonder betaalde billing te draaien. De zeven modellen
+> dekken alle drie de providers en drie grootteklassen (groot/middel/klein).
 
-## Architectuur (drielagen)
+## Architectuur
 
 ```
 Gebruiker (kiosk)
       │
-┌─────┴───────────────────── Lokale Server (Windows 11) ─────────────────────┐
-│  Front-end  : Nuxt (Vue 3, TypeScript)        — poort 3000                  │
+┌─────┴───────────────────────── Lokale machine ─────────────────────────────┐
+│  Front-end  : Nuxt (Vue 3, TypeScript) + Tailwind   — poort 3000            │
 │      │ RESTful API                                                          │
-│  Back-end   : Node.js + Express               — poort 3001                  │
-│      ├─ services/  footprintCalculator (EcoLogits-methode)                  │
-│      ├─ providers/ google + anthropic + ollama (live)                       │
+│  Back-end   : Node.js + Express                     — poort 3001            │
+│      ├─ services/  footprintCalculator (EcoLogits-methode) + score          │
+│      ├─ providers/ google + anthropic + ollama                              │
 │      └─ db/        SQLite (modellen, factoren, cache)                       │
 └──────────────────────────────────────────────────────┬────────────────────┘
-                                                        │ HTTPS 443 (live calls, later)
+                                                        │ HTTPS (live API calls)
                                             Externe AI-providers (Google, Anthropic)
 ```
 
-## Status van deze opzet
+Cloud-modellen (Gemini, Claude) draaien via hun API; de open modellen (Llama,
+Qwen) draaien lokaal via [Ollama](https://ollama.com). De footprint wordt per
+verzoek berekend uit de werkelijke tokenaantallen.
 
-- ✅ **Footprint-berekening** volledig werkend en gevalideerd tegen Tabel 3 van het TO
-  (`backend/services/footprintCalculator.js`, test: `npm test`).
-- ✅ **Database** met schema + seed van alle 7 modellen en hun factoren (SQLite).
-- ✅ **Endpoints** uit hoofdstuk 8 functioneel bedraad.
-- ✅ **Anthropic (Claude)** live: echte API-calls met de echte tokenaantallen uit
-  de `usage`-response (key via `backend/.env`). Opus, Sonnet en Haiku.
-- ✅ **Google (Gemini)** live: Flash en Flash-Lite via de gratis tier (key via
-  `backend/.env`). Pro is weggelaten (zie boven).
-- ✅ **Ollama** live: echte HTTP-calls naar `localhost:11434` voor Llama 3.2 3B
-  en Qwen 2.5 3B (lokaal, gratis, geen internet nodig). Met `MOCK_PROVIDERS=true`
-  in `.env` forceer je alle providers terug op mock (handig zonder keys / voor tests).
-- 🟡 **Front-end** is een functionele stub: prompt invoeren, modellen kiezen,
-  vergelijking ophalen en tonen. De definitieve kiosk-UI/styling volgt later.
+## Vereisten
 
-## Aan de slag
+- **Node.js** (LTS v20 of v22 aanbevolen) en **Git**
+- **Ollama** voor de twee lokale modellen (optioneel — zie hieronder)
+- API-keys voor Gemini en/of Claude (optioneel — zonder keys vallen die
+  providers terug op een mock-antwoord)
 
-### Snel starten op een nieuwe laptop (Windows of Mac)
+## Setup & starten
 
-Vereisten: **Node.js** (LTS v20 of v22 aanbevolen) en **Git**.
+Cross-platform (Windows en Mac identiek):
 
 ```bash
 git clone https://github.com/DinandN/ai-footprint-spiegel.git
 cd ai-footprint-spiegel
-npm run setup        # installeert alles, maakt .env-bestanden, haalt Ollama-modellen op
-npm run dev          # start front-end (3000) + back-end (3001) samen
+npm run setup        # installeert deps, maakt .env-bestanden, haalt Ollama-modellen op
+npm run dev          # start front-end (:3000) + back-end (:3001) samen
 ```
 
-- **API-keys** (optioneel) in `backend/.env` zetten — zonder keys vallen de
-  cloud-providers terug op mock:
-  ```
-  ANTHROPIC_API_KEY=...
-  GOOGLE_API_KEY=...
-  ```
-- **Ollama** (voor de twee lokale modellen) — eenmalig installeren:
-  - Windows: `winget install Ollama.Ollama` (of https://ollama.com/download/windows)
-  - Mac: `brew install ollama` (of https://ollama.com/download/mac)
+Open daarna **http://localhost:3000**.
 
-  Zorg dat de Ollama-service draait (Windows: start automatisch na installatie;
-  Mac: `ollama serve` of open de Ollama-app), en draai dan `npm run setup`
-  opnieuw (of `npm run pull-models`) om de modellen op te halen. Werkt het hele
-  setup-commando, dan is `npm run dev` voldoende om alles te starten.
+> `npm run setup` is een Node-script (geen shell-magie), dus het werkt hetzelfde
+> op Windows en Mac.
 
-> `npm run setup` is cross-platform (een Node-script, geen shell-magie) en werkt
-> identiek op Windows en Mac.
+### API-keys (optioneel)
 
-### Handmatig (per onderdeel)
+Zet je keys in `backend/.env` (dit bestand komt nooit in Git):
 
-### Back-end
-
-```bash
-cd backend
-cp .env.example .env      # keys mogen nu leeg blijven (providers zijn mock)
-npm install
-npm run seed              # maakt en vult db/footprint.db
-npm test                  # valideert de footprint-berekening tegen Tabel 3
-npm run dev               # start API op http://localhost:3001
+```
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_API_KEY=...
 ```
 
-### Front-end
+Zonder key geeft die provider een duidelijk gelabeld mock-antwoord terug. Zet
+`MOCK_PROVIDERS=true` in `backend/.env` om alle providers te forceren naar mock
+(handig voor ontwikkelen zonder keys of voor tests).
+
+### Ollama (voor de lokale modellen)
+
+Eenmalig installeren:
+
+- **Windows:** `winget install Ollama.Ollama` (of https://ollama.com/download/windows)
+- **Mac:** `brew install ollama` (of https://ollama.com/download/mac)
+
+Zorg dat de Ollama-service draait (Windows: start automatisch na installatie;
+Mac: `ollama serve` of open de Ollama-app). Haal daarna de modellen op met
+`npm run pull-models` (of opnieuw `npm run setup`). Ollama draait volledig lokaal
+en heeft geen internet of API-key nodig.
+
+### Handmatig per onderdeel
 
 ```bash
-cd frontend
-cp .env.example .env
-npm install
-npm run dev               # start kiosk op http://localhost:3000
+# Back-end
+cd backend && npm install && npm run seed && npm run dev   # http://localhost:3001
+
+# Front-end (andere terminal)
+cd frontend && npm install && npm run dev                  # http://localhost:3000
 ```
 
 ## Endpoints
@@ -120,19 +110,29 @@ npm run dev               # start kiosk op http://localhost:3000
 | GET | `/api/footprint/:modelId` | Footprint-factoren + referentieberekening van een model |
 | POST | `/api/session/reset` | Reset de kiosk-sessie en wist tijdelijke gegevens |
 
-## Berekeningsmethode
+## Berekening
 
-EcoLogits-gebaseerd (hoofdstuk 5 TO). Energie per verzoek:
+EcoLogits-gebaseerd (hoofdstuk 5 van het Technisch Ontwerp). Energie per verzoek:
 
 ```
 E = T_out × (α × P_active + β) × PUE      α = 8,91e-5   β = 1,43e-3   (Wh/token)
 ```
 
-Daarna: CO₂ = E × CI, water = E × WI, kosten uit officiële tokenprijzen (cloud) of
-lokaal stroomverbruik (Ollama). Alle factoren staan centraal in
+Daarna: CO₂ = E × CI, water = E × WI, kosten uit officiële tokenprijzen (cloud)
+of lokaal stroomverbruik (Ollama). Alle omrekenfactoren staan centraal in
 `backend/config/constants.js`.
 
-> Let op: de kostenwaarden voor de Gemini-rijen in Tabel 3 van het TO lijken met een
-> afwijkende wisselkoers te zijn berekend (≈0,846 i.p.v. 0,92). Deze implementatie
-> volgt de gedocumenteerde methode (USD × 0,92); energie/CO₂/water reproduceren Tabel 3
-> exact, Gemini-kosten wijken daardoor ~8% af van die tabel. Zie de test voor details.
+### Score
+
+Elk model krijgt een **gesummeerde score** (max 100), als som over de vier
+metrics. Per metric krijgt het zuinigste model **25 punten**; de rest krijgt tot
+24 punten, geschaald naar hoe dicht het bij de beste zit
+(`beste / eigen waarde × 24`). Op de resultatenpagina staat de beste bovenaan:
+gesorteerd op de gekozen metric, of op totaalscore in het overzicht.
+
+## Tests
+
+```bash
+cd backend  && npm test        # footprint-berekening, gevalideerd tegen het TO
+cd frontend && npm test        # componenten, pagina's en view-logica (Vitest)
+```

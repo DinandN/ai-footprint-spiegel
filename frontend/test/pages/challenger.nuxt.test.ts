@@ -35,6 +35,8 @@ beforeEach(() => {
   prompt = ref("");
   selectedIds = ref<string[]>([]);
   loading = ref(false);
+  // Two Anthropic variants (one card with a chevron), plus one Google and one
+  // Ollama model → three provider cards.
   models = ref<Model[]>([
     {
       id: "gemini-2.5-flash",
@@ -53,6 +55,15 @@ beforeEach(() => {
       pActiveBillions: 200,
       priceInputPerMTokens: 5,
       priceOutputPerMTokens: 25,
+    },
+    {
+      id: "claude-sonnet-4-6",
+      name: "Claude Sonnet 4.6",
+      provider: "anthropic",
+      type: "cloud",
+      pActiveBillions: 70,
+      priceInputPerMTokens: 3,
+      priceOutputPerMTokens: 15,
     },
     {
       id: "llama-3.2-3b",
@@ -83,34 +94,71 @@ beforeEach(() => {
 });
 
 describe("pages/challenger.vue", () => {
-  it("rendert een keuzekaart per beschikbaar model", async () => {
+  it("rendert één keuzekaart per provider", async () => {
     const wrapper = await mountSuspended(ChallengerPage);
     await flushPromises();
+    // google + anthropic + ollama = 3 kaarten (niet 4 modellen).
     expect(wrapper.findAll("button[aria-pressed]")).toHaveLength(3);
   });
 
-  it("schakelt de verzendknop pas in na invoer én selectie", async () => {
+  it("schakelt de verzendknop pas in na invoer én minimaal 2 modellen", async () => {
     const wrapper = await mountSuspended(ChallengerPage);
     await flushPromises();
 
     const submit = findByText(wrapper, "Stuur Vraag");
-    expect(submit.attributes("disabled")).toBeDefined();
-
     await wrapper.get("textarea").setValue("Wat is duurzame AI?");
+
     await wrapper.findAll("button[aria-pressed]")[0].trigger("click");
     await flushPromises();
+    expect(submit.attributes("disabled")).toBeDefined(); // 1 model = nog niet
 
-    expect(submit.attributes("disabled")).toBeUndefined();
+    await wrapper.findAll("button[aria-pressed]")[1].trigger("click");
+    await flushPromises();
+    expect(submit.attributes("disabled")).toBeUndefined(); // 2 modellen = wel
   });
 
-  it("toont de validatiemelding zolang er geen model is gekozen", async () => {
+  it("toont de validatiemelding zolang er minder dan 2 modellen gekozen zijn", async () => {
     const wrapper = await mountSuspended(ChallengerPage);
     await flushPromises();
-    expect(wrapper.text()).toContain("Selecteer Minimaal 1 AI-model");
+    expect(wrapper.text()).toContain("Selecteer minimaal 2 AI-modellen");
 
     await wrapper.findAll("button[aria-pressed]")[0].trigger("click");
     await flushPromises();
-    expect(wrapper.text()).not.toContain("Selecteer Minimaal 1 AI-model");
+    expect(wrapper.text()).toContain("Selecteer minimaal 2 AI-modellen");
+
+    await wrapper.findAll("button[aria-pressed]")[1].trigger("click");
+    await flushPromises();
+    expect(wrapper.text()).not.toContain("Selecteer minimaal 2 AI-modellen");
+  });
+
+  it("wisselt via de dropdown naar een andere variant binnen de provider", async () => {
+    const wrapper = await mountSuspended(ChallengerPage);
+    await flushPromises();
+    expect(wrapper.text()).toContain("Claude Opus 4.8");
+
+    // Alleen de Anthropic-kaart heeft meerdere varianten → één dropdown.
+    const selects = wrapper.findAll("select");
+    expect(selects).toHaveLength(1);
+
+    await selects[0].setValue("claude-sonnet-4-6");
+    await flushPromises();
+    expect(wrapper.text()).toContain("Claude Sonnet 4.6");
+  });
+
+  it("verplaatst de selectie mee bij het wisselen van variant", async () => {
+    const wrapper = await mountSuspended(ChallengerPage);
+    await flushPromises();
+
+    // Selecteer de Anthropic-kaart (index 1) op de Opus-variant.
+    await wrapper.findAll("button[aria-pressed]")[1].trigger("click");
+    await flushPromises();
+    expect(selectedIds.value).toContain("claude-opus-4-8");
+
+    // Kies een andere variant in de dropdown → selectie schuift mee naar Sonnet.
+    await wrapper.get("select").setValue("claude-sonnet-4-6");
+    await flushPromises();
+    expect(selectedIds.value).not.toContain("claude-opus-4-8");
+    expect(selectedIds.value).toContain("claude-sonnet-4-6");
   });
 
   it("toont een live karakter-teller", async () => {
@@ -138,6 +186,7 @@ describe("pages/challenger.vue", () => {
 
     await wrapper.get("textarea").setValue("Wat is duurzame AI?");
     await wrapper.findAll("button[aria-pressed]")[0].trigger("click");
+    await wrapper.findAll("button[aria-pressed]")[1].trigger("click");
     await flushPromises();
 
     await findByText(wrapper, "Stuur Vraag").trigger("click");

@@ -27,7 +27,20 @@ export interface RowVm {
   ok: boolean;
   error?: string;
   response: string;
+  score: number | null;
   tiles: TileVm[];
+}
+
+// Points (0–25) for one metric value, given the best (lowest) value in the set.
+// The best value scores 25; the rest score up to 24, scaled by how close their
+// efficiency is to the best (best / own × 24). 2× the best's usage ≈ 12 points.
+const MAX_METRIC_POINTS = 25;
+const NON_WINNER_MAX = 24;
+
+export function metricPoints(value: number, best: number): number {
+  if (value === best) return MAX_METRIC_POINTS;
+  if (best <= 0) return 0; // best uses nothing; any usage scores 0 here
+  return (best / value) * NON_WINNER_MAX;
 }
 
 interface MetricDef {
@@ -51,10 +64,11 @@ export const METRICS: MetricDef[] = [
   { key: "cost", label: "Kosten", field: "costEur", iconId: "ic-coin", iconKind: "coin", unit: "euro", maxIcons: 9, decimals: 4, ref: 0.0001, refLabel: "jaar Zuyd" },
 ];
 
-// Provider → brand logo (mirrors ModelSelectCard). Local models have none.
+// Provider → brand logo (mirrors ModelSelectCard).
 const LOGOS: Record<string, string> = {
   google: "/img/challenger/gemini.png",
   anthropic: "/img/challenger/claude.png",
+  ollama: "/img/challenger/ollama.svg",
 };
 
 // Number of glyphs for a value, scaled relative to the current result set
@@ -112,13 +126,39 @@ export function buildResultRows(
   }
   const champ = championModelId(results, activeMetric);
 
-  return results.map((r) => ({
+  // Summed score (max 100): sum of the per-metric points over the four metrics.
+  function scoreOf(r: CompareResult): number | null {
+    if (!r.ok || !r.footprint) return null;
+    const total = METRICS.reduce(
+      (sum, m) =>
+        sum + metricPoints(r.footprint![m.field] as number, ranges[m.key].min),
+      0,
+    );
+    return Math.round(total);
+  }
+  const scoreById = new Map(results.map((r) => [r.modelId, scoreOf(r)]));
+
+  // Best on top. With a metric filter active: ascending by that metric (lowest
+  // value = best). With "all": descending by total score (highest = best).
+  // Failed results (no value / no score) sink to the bottom.
+  const def = METRICS.find((m) => m.key === activeMetric);
+  const ordered = [...results].sort((a, b) => {
+    if (def == null) {
+      return (scoreById.get(b.modelId) ?? -1) - (scoreById.get(a.modelId) ?? -1);
+    }
+    const av = a.ok && a.footprint ? (a.footprint[def.field] as number) : Infinity;
+    const bv = b.ok && b.footprint ? (b.footprint[def.field] as number) : Infinity;
+    return av - bv;
+  });
+
+  return ordered.map((r) => ({
     modelId: r.modelId,
     name: r.model?.name ?? r.modelId,
     logo: LOGOS[r.model?.provider ?? ""] ?? null,
     ok: r.ok,
     error: r.error,
     response: r.response ?? "",
+    score: scoreById.get(r.modelId) ?? null,
     tiles:
       r.ok && r.footprint
         ? METRICS.map((def) => {

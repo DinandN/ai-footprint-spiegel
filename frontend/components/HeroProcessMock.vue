@@ -101,7 +101,12 @@ const metrics = [
         :key="m.key"
         class="flex flex-col items-center text-center"
       >
+        <IconWallet
+          v-if="m.key === 'cost'"
+          class="h-10 w-10 drop-shadow-[0_4px_2px_rgba(0,0,0,0.25)]"
+        />
         <svg
+          v-else
           :class="[
             'h-10 w-10 drop-shadow-[0_4px_2px_rgba(0,0,0,0.25)]',
             m.iconColor,

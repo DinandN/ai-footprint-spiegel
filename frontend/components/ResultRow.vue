@@ -10,25 +10,26 @@ const expanded = ref(false);
 </script>
 
 <template>
-  <article class="flex flex-wrap items-stretch gap-12 xl:flex-nowrap">
+  <article class="flex flex-wrap items-start gap-12 xl:flex-nowrap">
     <!-- Left summary -->
     <div
       class="flex min-h-[202px] w-full flex-col rounded-cf bg-form px-[26px] pb-5 pt-[18px] xl:max-w-[600px] xl:flex-[1_1_560px]"
     >
       <div class="flex items-start justify-between gap-4">
-        <div class="flex h-[70px] items-center">
+        <div class="flex h-[70px] shrink-0 items-center">
           <img
             v-if="row.logo"
             :src="row.logo"
             :alt="row.name"
-            class="max-h-[70px] w-auto max-w-[232px] object-contain"
+            class="h-[70px] w-auto max-w-[232px] object-contain"
           />
           <span v-else class="text-[25px] text-ink">{{ row.name }}</span>
         </div>
         <div class="text-right">
           <span class="text-base font-bold text-ink">Gesummeerde Score</span>
-          <!-- TODO: echte duurzaamheidsscore komt uit de back-end (Technical Design). -->
-          <span class="mt-1 block text-[48px] font-bold leading-none text-ink sm:text-[61px]">–</span>
+          <span class="mt-1 block text-[48px] font-bold leading-none text-ink sm:text-[61px]">
+            {{ row.ok && row.score != null ? row.score : "–" }}
+          </span>
         </div>
       </div>
 
