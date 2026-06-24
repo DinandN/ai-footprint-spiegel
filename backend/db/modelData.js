@@ -66,7 +66,7 @@ const MODELS = [
     name: "Claude Haiku 4.5",
     provider: "anthropic",
     type: "cloud",
-    apiModelId: "claude-haiku-4-5",
+    apiModelId: "claude-haiku-4-5-20251001",
     pActiveBillions: 20,
     pActiveSource: "estimate",
     priceInputPerMTokens: 1.0,

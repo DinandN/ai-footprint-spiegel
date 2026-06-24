@@ -1,10 +1,28 @@
 // Anthropic (Claude) provider.
 //
-// Currently returns a deterministic mock response so the app runs without keys.
-// To go live: install @anthropic-ai/sdk, read ANTHROPIC_API_KEY from the
-// environment, and replace the mock block with a real messages.create() call.
+// Makes a real call to the Anthropic Messages API and returns the response text
+// together with the exact token counts from the API's usage field — these feed
+// the footprint calculation.
+//
+// Falls back to a deterministic mock when MOCK_PROVIDERS=true or when no
+// ANTHROPIC_API_KEY is configured, so the app keeps running without a key.
 
 const { buildMockResponse } = require("./mockResponses");
+
+const MAX_TOKENS = 1024;
+
+function useMock() {
+  return process.env.MOCK_PROVIDERS === "true" || !process.env.ANTHROPIC_API_KEY;
+}
+
+let client = null;
+function getClient() {
+  if (!client) {
+    const Anthropic = require("@anthropic-ai/sdk");
+    client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  }
+  return client;
+}
 
 /**
  * @param {object} model    Model record (provider === 'anthropic').
@@ -12,19 +30,26 @@ const { buildMockResponse } = require("./mockResponses");
  * @returns {Promise<{ text: string, inputTokens: number, outputTokens: number }>}
  */
 async function generate(model, prompt) {
-  // TODO(live): replace with a real Anthropic call, e.g.
-  //   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-  //   const res = await client.messages.create({
-  //     model: model.apiModelId,
-  //     max_tokens: 1024,
-  //     messages: [{ role: "user", content: prompt }],
-  //   });
-  //   return {
-  //     text: res.content.map((c) => c.text ?? "").join(""),
-  //     inputTokens: res.usage.input_tokens,
-  //     outputTokens: res.usage.output_tokens,
-  //   };
-  return buildMockResponse(model, prompt);
+  if (useMock()) {
+    return buildMockResponse(model, prompt);
+  }
+
+  const res = await getClient().messages.create({
+    model: model.apiModelId,
+    max_tokens: MAX_TOKENS,
+    messages: [{ role: "user", content: prompt }],
+  });
+
+  const text = res.content
+    .filter((block) => block.type === "text")
+    .map((block) => block.text)
+    .join("");
+
+  return {
+    text,
+    inputTokens: res.usage.input_tokens,
+    outputTokens: res.usage.output_tokens,
+  };
 }
 
 module.exports = { generate };

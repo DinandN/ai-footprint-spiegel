@@ -43,8 +43,11 @@ Gebruiker (kiosk)
   (`backend/services/footprintCalculator.js`, test: `npm test`).
 - ✅ **Database** met schema + seed van alle 8 modellen en hun factoren (SQLite).
 - ✅ **Endpoints** uit hoofdstuk 8 functioneel bedraad.
-- 🟡 **Providers** geven nu deterministische **mock-responses** terug — de echte
-  SDK-calls (Anthropic, Google, Ollama) zijn als duidelijke TODO's gemarkeerd.
+- ✅ **Anthropic (Claude)** doet echte API-calls met de echte tokenaantallen uit
+  de `usage`-response (key via `backend/.env`). Opus, Sonnet en Haiku zijn live.
+- 🟡 **Google & Ollama** geven nog mock-responses terug — de echte koppelingen
+  zijn als duidelijke `TODO(live)` gemarkeerd. Met `MOCK_PROVIDERS=true` in `.env`
+  forceer je alle providers terug op mock (handig zonder keys / voor tests).
 - 🟡 **Front-end** is een functionele stub: prompt invoeren, modellen kiezen,
   vergelijking ophalen en tonen. De definitieve kiosk-UI/styling volgt later.
 
