@@ -1,0 +1,19 @@
+{
+  "name": "ai-footprint-spiegel-backend",
+  "version": "0.1.0",
+  "description": "Express API for the AI Footprint Spiegel (businesslaag + datalaag)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node db/seed.js",
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
