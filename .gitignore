@@ -29,3 +29,7 @@ npm-debug.log*
 .idea/
 .vscode/
 *.swp
+
+# Local working files / tool artifacts (not part of the repo)
+.playwright-mcp/
+design/

@@ -34,7 +34,7 @@ Gebruiker (kiosk)
 │      │ RESTful API                                                          │
 │  Back-end   : Node.js + Express               — poort 3001                  │
 │      ├─ services/  footprintCalculator (EcoLogits-methode)                  │
-│      ├─ providers/ google + anthropic (live) · ollama (nog mock)            │
+│      ├─ providers/ google + anthropic + ollama (live)                       │
 │      └─ db/        SQLite (modellen, factoren, cache)                       │
 └──────────────────────────────────────────────────────┬────────────────────┘
                                                         │ HTTPS 443 (live calls, later)
@@ -51,13 +51,44 @@ Gebruiker (kiosk)
   de `usage`-response (key via `backend/.env`). Opus, Sonnet en Haiku.
 - ✅ **Google (Gemini)** live: Flash en Flash-Lite via de gratis tier (key via
   `backend/.env`). Pro is weggelaten (zie boven).
-- 🟡 **Ollama** geeft nog mock-responses terug — de echte koppeling is als
-  `TODO(live)` gemarkeerd. Met `MOCK_PROVIDERS=true` in `.env` forceer je alle
-  providers terug op mock (handig zonder keys / voor tests).
+- ✅ **Ollama** live: echte HTTP-calls naar `localhost:11434` voor Llama 3.2 3B
+  en Qwen 2.5 3B (lokaal, gratis, geen internet nodig). Met `MOCK_PROVIDERS=true`
+  in `.env` forceer je alle providers terug op mock (handig zonder keys / voor tests).
 - 🟡 **Front-end** is een functionele stub: prompt invoeren, modellen kiezen,
   vergelijking ophalen en tonen. De definitieve kiosk-UI/styling volgt later.
 
 ## Aan de slag
+
+### Snel starten op een nieuwe laptop (Windows of Mac)
+
+Vereisten: **Node.js** (LTS v20 of v22 aanbevolen) en **Git**.
+
+```bash
+git clone https://github.com/DinandN/ai-footprint-spiegel.git
+cd ai-footprint-spiegel
+npm run setup        # installeert alles, maakt .env-bestanden, haalt Ollama-modellen op
+npm run dev          # start front-end (3000) + back-end (3001) samen
+```
+
+- **API-keys** (optioneel) in `backend/.env` zetten — zonder keys vallen de
+  cloud-providers terug op mock:
+  ```
+  ANTHROPIC_API_KEY=...
+  GOOGLE_API_KEY=...
+  ```
+- **Ollama** (voor de twee lokale modellen) — eenmalig installeren:
+  - Windows: `winget install Ollama.Ollama` (of https://ollama.com/download/windows)
+  - Mac: `brew install ollama` (of https://ollama.com/download/mac)
+
+  Zorg dat de Ollama-service draait (Windows: start automatisch na installatie;
+  Mac: `ollama serve` of open de Ollama-app), en draai dan `npm run setup`
+  opnieuw (of `npm run pull-models`) om de modellen op te halen. Werkt het hele
+  setup-commando, dan is `npm run dev` voldoende om alles te starten.
+
+> `npm run setup` is cross-platform (een Node-script, geen shell-magie) en werkt
+> identiek op Windows en Mac.
+
+### Handmatig (per onderdeel)
 
 ### Back-end
 
