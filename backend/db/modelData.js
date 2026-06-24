@@ -5,18 +5,9 @@
 // `pActiveBillions`  active parameters in billions (estimate for cloud models)
 // `priceInput/Output` official price per 1M tokens in USD (null for local models)
 
+// Note: Gemini 2.5 Pro is intentionally excluded — it has no Google free tier
+// (free quota is 0), so it cannot be run without paid billing. See README.
 const MODELS = [
-  {
-    id: "gemini-2.5-pro",
-    name: "Gemini 2.5 Pro",
-    provider: "google",
-    type: "cloud",
-    apiModelId: "gemini-2.5-pro",
-    pActiveBillions: 200,
-    pActiveSource: "estimate",
-    priceInputPerMTokens: 1.25,
-    priceOutputPerMTokens: 10.0,
-  },
   {
     id: "gemini-2.5-flash",
     name: "Gemini 2.5 Flash",

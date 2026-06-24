@@ -27,6 +27,15 @@ function seed() {
 
   const seedAll = db.transaction((models) => {
     for (const model of models) upsert.run(model);
+
+    // Make the seed authoritative: remove any models (and their cached
+    // responses) that are no longer in modelData.js.
+    const ids = models.map((m) => m.id);
+    const placeholders = ids.map(() => "?").join(",");
+    db.prepare(
+      `DELETE FROM response_cache WHERE model_id NOT IN (${placeholders})`,
+    ).run(...ids);
+    db.prepare(`DELETE FROM models WHERE id NOT IN (${placeholders})`).run(...ids);
   });
 
   seedAll(MODELS);

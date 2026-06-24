@@ -14,7 +14,6 @@ const REF = { inputTokens: 500, outputTokens: 500 };
 
 // Expected energy / CO2 / water per model from Table 3.
 const EXPECTED = {
-  "gemini-2.5-pro": { energyWh: 10.59, co2Grams: 4.43, waterMl: 19.06 },
   "gemini-2.5-flash": { energyWh: 4.22, co2Grams: 1.76, waterMl: 7.59 },
   "gemini-2.5-flash-lite": { energyWh: 1.77, co2Grams: 0.74, waterMl: 3.18 },
   "claude-opus-4-8": { energyWh: 10.59, co2Grams: 4.43, waterMl: 19.06 },
@@ -58,7 +57,7 @@ test("Google cost follows the documented method (USD price x 0.92)", () => {
   // Note: Table 3's Gemini cost cells appear to use a different exchange rate
   // (~0.846). This implementation follows the documented method, so it matches
   // the formula below rather than those specific table cells.
-  for (const id of ["gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.5-flash-lite"]) {
+  for (const id of ["gemini-2.5-flash", "gemini-2.5-flash-lite"]) {
     const m = byId[id];
     const expected =
       ((REF.inputTokens / 1e6) * m.priceInputPerMTokens +

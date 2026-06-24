@@ -1,10 +1,25 @@
 // Google (Gemini) provider.
 //
-// Currently returns a deterministic mock response so the app runs without keys.
-// To go live: install @google/genai, read GOOGLE_API_KEY from the environment,
-// and replace the mock block with a real generateContent() call.
+// Makes a real call to the Gemini Developer API (Google AI Studio key) and
+// returns the response text plus the exact token counts from usageMetadata.
+//
+// Falls back to a deterministic mock when MOCK_PROVIDERS=true or when no
+// GOOGLE_API_KEY is configured, so the app keeps running without a key.
 
 const { buildMockResponse } = require("./mockResponses");
+
+function useMock() {
+  return process.env.MOCK_PROVIDERS === "true" || !process.env.GOOGLE_API_KEY;
+}
+
+let client = null;
+function getClient() {
+  if (!client) {
+    const { GoogleGenAI } = require("@google/genai");
+    client = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
+  }
+  return client;
+}
 
 /**
  * @param {object} model    Model record (provider === 'google').
@@ -12,18 +27,21 @@ const { buildMockResponse } = require("./mockResponses");
  * @returns {Promise<{ text: string, inputTokens: number, outputTokens: number }>}
  */
 async function generate(model, prompt) {
-  // TODO(live): replace with a real Gemini call, e.g.
-  //   const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
-  //   const res = await ai.models.generateContent({
-  //     model: model.apiModelId,
-  //     contents: prompt,
-  //   });
-  //   return {
-  //     text: res.text,
-  //     inputTokens: res.usageMetadata.promptTokenCount,
-  //     outputTokens: res.usageMetadata.candidatesTokenCount,
-  //   };
-  return buildMockResponse(model, prompt);
+  if (useMock()) {
+    return buildMockResponse(model, prompt);
+  }
+
+  const res = await getClient().models.generateContent({
+    model: model.apiModelId,
+    contents: prompt,
+  });
+
+  const usage = res.usageMetadata || {};
+  return {
+    text: res.text ?? "",
+    inputTokens: usage.promptTokenCount ?? 0,
+    outputTokens: usage.candidatesTokenCount ?? 0,
+  };
 }
 
 module.exports = { generate };

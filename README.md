@@ -1,6 +1,6 @@
 # AI Footprint Spiegel
 
-Een lokaal gehoste kiosk-webapp die acht AI-modellen naast elkaar vergelijkt op
+Een lokaal gehoste kiosk-webapp die zeven AI-modellen naast elkaar vergelijkt op
 hun **output** én hun **duurzaamheidsimpact** (energie, water, CO₂, kosten).
 Ontwikkeld als artefact voor het Lectoraat Data Intelligence (project _Optimize |
 Duurzame Technologie in Beeld_) — Zuyd Hogeschool.
@@ -11,7 +11,6 @@ Dit is de eerste opzet (scaffold + kernlogica) op basis van het Technisch Ontwer
 
 | Model | Provider | Type | P_active (mld) |
 | --- | --- | --- | --- |
-| Gemini 2.5 Pro | Google | cloud | 200 (schatting) |
 | Gemini 2.5 Flash | Google | cloud | 70 (schatting) |
 | Gemini 2.5 Flash-Lite | Google | cloud | 20 (schatting) |
 | Claude Opus 4.8 | Anthropic | cloud | 200 (schatting) |
@@ -19,6 +18,11 @@ Dit is de eerste opzet (scaffold + kernlogica) op basis van het Technisch Ontwer
 | Claude Haiku 4.5 | Anthropic | cloud | 20 (schatting) |
 | Llama 3.2 3B | Ollama (lokaal) | local | 3 (bekend) |
 | Qwen 2.5 3B | Ollama (lokaal) | local | 3 (bekend) |
+
+> Afwijking van het TO: het TO beschrijft acht modellen incl. **Gemini 2.5 Pro**.
+> Pro is bewust weggelaten omdat het geen gratis Google-tier heeft (gratis quota = 0)
+> en dus niet zonder betaalde billing te draaien is. De overige zeven modellen
+> dekken alle drie de providers en de drie grootteklassen (groot/middel/klein).
 
 ## Architectuur (drielagen)
 
@@ -30,7 +34,7 @@ Gebruiker (kiosk)
 │      │ RESTful API                                                          │
 │  Back-end   : Node.js + Express               — poort 3001                  │
 │      ├─ services/  footprintCalculator (EcoLogits-methode)                  │
-│      ├─ providers/ google · anthropic · ollama (nu mock-responses)          │
+│      ├─ providers/ google + anthropic (live) · ollama (nog mock)            │
 │      └─ db/        SQLite (modellen, factoren, cache)                       │
 └──────────────────────────────────────────────────────┬────────────────────┘
                                                         │ HTTPS 443 (live calls, later)
@@ -41,13 +45,15 @@ Gebruiker (kiosk)
 
 - ✅ **Footprint-berekening** volledig werkend en gevalideerd tegen Tabel 3 van het TO
   (`backend/services/footprintCalculator.js`, test: `npm test`).
-- ✅ **Database** met schema + seed van alle 8 modellen en hun factoren (SQLite).
+- ✅ **Database** met schema + seed van alle 7 modellen en hun factoren (SQLite).
 - ✅ **Endpoints** uit hoofdstuk 8 functioneel bedraad.
-- ✅ **Anthropic (Claude)** doet echte API-calls met de echte tokenaantallen uit
-  de `usage`-response (key via `backend/.env`). Opus, Sonnet en Haiku zijn live.
-- 🟡 **Google & Ollama** geven nog mock-responses terug — de echte koppelingen
-  zijn als duidelijke `TODO(live)` gemarkeerd. Met `MOCK_PROVIDERS=true` in `.env`
-  forceer je alle providers terug op mock (handig zonder keys / voor tests).
+- ✅ **Anthropic (Claude)** live: echte API-calls met de echte tokenaantallen uit
+  de `usage`-response (key via `backend/.env`). Opus, Sonnet en Haiku.
+- ✅ **Google (Gemini)** live: Flash en Flash-Lite via de gratis tier (key via
+  `backend/.env`). Pro is weggelaten (zie boven).
+- 🟡 **Ollama** geeft nog mock-responses terug — de echte koppeling is als
+  `TODO(live)` gemarkeerd. Met `MOCK_PROVIDERS=true` in `.env` forceer je alle
+  providers terug op mock (handig zonder keys / voor tests).
 - 🟡 **Front-end** is een functionele stub: prompt invoeren, modellen kiezen,
   vergelijking ophalen en tonen. De definitieve kiosk-UI/styling volgt later.
 
