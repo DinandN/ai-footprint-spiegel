@@ -27,4 +27,14 @@ CREATE TABLE IF NOT EXISTS response_cache (
     UNIQUE (model_id, prompt_hash)
 );
 
+-- Pool of example prompts behind the "Verras me" button. Seeded with the
+-- built-in examples (source 'seed') and grown procedurally: every prompt a user
+-- submits is added (source 'user'), so the suggestions expand over time.
+CREATE TABLE IF NOT EXISTS example_prompts (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    prompt          TEXT NOT NULL UNIQUE,
+    source          TEXT NOT NULL DEFAULT 'user',     -- seed | user
+    created_at      TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 CREATE INDEX IF NOT EXISTS idx_models_provider ON models (provider);

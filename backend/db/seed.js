@@ -3,8 +3,9 @@
 
 const fs = require("fs");
 const path = require("path");
-const { db, initSchema, saveCachedResponse } = require("./database");
+const { db, initSchema, saveCachedResponse, addExamplePrompt } = require("./database");
 const { MODELS } = require("./modelData");
+const { EXAMPLE_QUESTIONS } = require("./exampleQuestions");
 
 const EXAMPLE_CACHE_PATH = path.join(__dirname, "exampleCache.json");
 
@@ -68,6 +69,10 @@ function seed() {
 
   seedAll(MODELS);
   console.log(`Seeded ${MODELS.length} models into the database.`);
+
+  // Seed the "Verras me" pool with the built-in examples. User-submitted prompts
+  // are kept (INSERT OR IGNORE), so the pool only grows.
+  for (const prompt of EXAMPLE_QUESTIONS) addExamplePrompt(prompt, "seed");
 
   loadExampleCache(new Set(MODELS.map((m) => m.id)));
 }

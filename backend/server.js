@@ -16,6 +16,7 @@ const modelsRoute = require("./routes/models");
 const compareRoute = require("./routes/compare");
 const footprintRoute = require("./routes/footprint");
 const sessionRoute = require("./routes/session");
+const examplesRoute = require("./routes/examples");
 
 const PORT = process.env.PORT || 3001;
 // Front-end origin allowed to call this API (kiosk runs on the same machine).
@@ -36,6 +37,7 @@ app.use("/api/models", modelsRoute);
 app.use("/api/compare", compareRoute);
 app.use("/api/footprint", footprintRoute);
 app.use("/api/session", sessionRoute);
+app.use("/api/examples", examplesRoute);
 
 // 404 for unknown API routes.
 app.use((req, res) => {

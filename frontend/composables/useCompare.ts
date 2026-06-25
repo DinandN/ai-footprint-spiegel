@@ -40,10 +40,17 @@ export function useCompare() {
   const results = useState<CompareResult[]>("results", () => []);
   const loading = useState<boolean>("loading", () => false);
   const error = useState<string | null>("error", () => null);
+  // The "Verras me" pool — grows server-side as users submit prompts.
+  const examples = useState<string[]>("examples", () => []);
 
   async function loadModels() {
     const data = await $fetch<{ models: Model[] }>(`${apiBase}/models`);
     models.value = data.models;
+  }
+
+  async function loadExamples() {
+    const data = await $fetch<{ examples: string[] }>(`${apiBase}/examples`);
+    examples.value = data.examples;
   }
 
   function toggleModel(id: string) {
@@ -92,7 +99,9 @@ export function useCompare() {
     results,
     loading,
     error,
+    examples,
     loadModels,
+    loadExamples,
     toggleModel,
     runCompare,
     resetSession,

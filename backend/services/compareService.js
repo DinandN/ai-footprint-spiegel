@@ -11,6 +11,7 @@ const {
   getModelById,
   getCachedResponse,
   saveCachedResponse,
+  addExamplePrompt,
 } = require("../db/database");
 
 function hashPrompt(prompt) {
@@ -70,6 +71,15 @@ async function compareOne(modelId, prompt, promptHash) {
  */
 async function compare(prompt, modelIds) {
   const promptHash = hashPrompt(prompt);
+
+  // Grow the "Verras me" pool: every submitted prompt becomes a suggestion.
+  // Best-effort — a pool write must never break the comparison itself.
+  try {
+    addExamplePrompt(prompt, "user");
+  } catch {
+    // ignore: the pool is non-critical
+  }
+
   const results = await Promise.all(
     modelIds.map((id) => compareOne(id, prompt, promptHash)),
   );

@@ -15,13 +15,17 @@ const {
   prompt,
   selectedIds,
   loading,
+  examples,
   loadModels,
+  loadExamples,
   toggleModel,
   runCompare,
 } = useCompare();
 
-// Load the model list; fails silently if the back-end is not (yet) reachable.
+// Load the model list and the "Verras me" pool; both fail silently if the
+// back-end is not (yet) reachable (verrasMe falls back to FALLBACK_EXAMPLES).
 await loadModels().catch(() => {});
+await loadExamples?.().catch(() => {});
 
 const MIN_MODELS = 2;
 const MAX_CHARS = 2000;
@@ -65,10 +69,10 @@ function selectVariant(group: ProviderGroup, id: string) {
   }
 }
 
-// Example prompts for the "Verras me" (surprise me) button.
+// Fallback for the "Verras me" button when the server pool is unavailable.
 // Keep in sync with backend/db/exampleQuestions.js — the response cache is keyed
 // by the exact prompt text, so these are the prompts that get pre-cached.
-const EXAMPLES = [
+const FALLBACK_EXAMPLES = [
   "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
   "Schrijf een kort gedicht over de zee bij zonsondergang.",
   "Wat zijn drie praktische tips om thuis energie te besparen?",
@@ -82,8 +86,12 @@ const canSubmit = computed(
 );
 
 function verrasMe() {
-  const i = Math.floor(Math.random() * EXAMPLES.length);
-  prompt.value = EXAMPLES[i];
+  // Draw from the server-grown pool; fall back to the built-in list. Avoid
+  // repeating the prompt that is already in the box when there's a choice.
+  const pool = examples?.value?.length ? examples.value : FALLBACK_EXAMPLES;
+  const options =
+    pool.length > 1 ? pool.filter((p) => p !== prompt.value) : pool;
+  prompt.value = options[Math.floor(Math.random() * options.length)];
 }
 
 async function onSubmit() {

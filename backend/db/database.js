@@ -78,6 +78,28 @@ function clearCache() {
   db.prepare("DELETE FROM response_cache").run();
 }
 
+/** All example prompts (seed + user-submitted), oldest first. */
+function getExamplePrompts() {
+  return db
+    .prepare("SELECT prompt FROM example_prompts ORDER BY id")
+    .all()
+    .map((row) => row.prompt);
+}
+
+/**
+ * Add a prompt to the "Verras me" pool. Ignores blanks and duplicates, so the
+ * pool grows by one entry per distinct question.
+ * @param {string} prompt
+ * @param {"seed"|"user"} [source]
+ */
+function addExamplePrompt(prompt, source = "user") {
+  const text = (prompt || "").trim();
+  if (!text) return;
+  db.prepare(
+    "INSERT OR IGNORE INTO example_prompts (prompt, source) VALUES (?, ?)",
+  ).run(text, source);
+}
+
 module.exports = {
   db,
   initSchema,
@@ -86,4 +108,6 @@ module.exports = {
   getCachedResponse,
   saveCachedResponse,
   clearCache,
+  getExamplePrompts,
+  addExamplePrompt,
 };
