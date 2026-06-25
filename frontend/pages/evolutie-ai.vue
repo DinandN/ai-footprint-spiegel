@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// AI-history / evolution infographic. Mostly static editorial content; the year
-// selector + prev/next pager are interactive. Per-year milestone content and the
-// 9-step pager are static placeholders (no dataset available — see TODOs).
+// AI-history / evolution infographic. The "Mijlpalen" section is a data-driven
+// auto-advancing slider: year buttons (2022–2025) pick the year, the arrows step
+// per quarter, and it auto-plays through the whole 2022→2025 timeline. Milestone
+// content per quarter lives in MILESTONES below (sourced — see each entry).
 
 const heroBadges = [
   {
@@ -30,18 +31,246 @@ const heroBadges = [
   },
 ];
 
-const YEARS = ["2022", "2023", "2024"];
-const activeYear = ref("2024");
+type Milestone = {
+  period: string; // kwartaal-label, bv. "Jan – Mrt"
+  chips: string[]; // belangrijkste releases dat kwartaal
+  title: string;
+  body: string;
+  impactLabel: string; // wat de relatieve-impactbalk weergeeft
+  impactPct: number; // vulling van de balk (0–100, redactioneel/relatief)
+  sources: string;
+};
 
-function selectYear(year: string) {
-  activeYear.value = year;
+const YEARS = ["2022", "2023", "2024", "2025"] as const;
+
+// Vier kwartalen per jaar. Gegevens en data geverifieerd tegen de bronnen per entry.
+const MILESTONES: Record<string, Milestone[]> = {
+  "2022": [
+    {
+      period: "Jan – Mrt",
+      chips: ["InstructGPT", "Chinchilla"],
+      title: "RLHF & slimmer trainen",
+      body: "OpenAI laat met InstructGPT zien dat modellen via menselijke feedback (RLHF) veel beter instructies volgen. DeepMind's Chinchilla bewijst dat de juiste balans tussen data en parameters belangrijker is dan louter méér parameters.",
+      impactLabel: "Onderzoeksimpact",
+      impactPct: 45,
+      sources:
+        "Ouyang et al., OpenAI 'InstructGPT' (jan. 2022); Hoffmann et al., DeepMind 'Chinchilla' (mrt. 2022).",
+    },
+    {
+      period: "Apr – Jun",
+      chips: ["DALL·E 2", "PaLM 540B", "Imagen"],
+      title: "De doorbraak van beeldgeneratie",
+      body: "OpenAI's DALL·E 2 en Google's Imagen zetten tekst-naar-beeld op de kaart, terwijl Google's PaLM (540B parameters) de grens van taalmodellen verlegt.",
+      impactLabel: "Publieke aandacht",
+      impactPct: 55,
+      sources: "OpenAI 'DALL·E 2' (apr. 2022); Google 'PaLM' (apr. 2022) & 'Imagen' (mei 2022).",
+    },
+    {
+      period: "Jul – Sep",
+      chips: ["Stable Diffusion", "Midjourney", "Whisper"],
+      title: "Open-source beeld-AI voor iedereen",
+      body: "Met de open release van Stable Diffusion (aug.) en de Midjourney-bèta wordt beeldgeneratie gratis en lokaal beschikbaar. OpenAI brengt Whisper uit voor spraakherkenning.",
+      impactLabel: "Democratisering",
+      impactPct: 60,
+      sources:
+        "Stability AI 'Stable Diffusion' (aug. 2022); Midjourney open bèta (jul. 2022); OpenAI 'Whisper' (sep. 2022).",
+    },
+    {
+      period: "Okt – Dec",
+      chips: ["ChatGPT", "GPT-3.5"],
+      title: "ChatGPT verandert alles",
+      body: "Op 30 november lanceert OpenAI ChatGPT (GPT-3.5). Het haalt 1 miljoen gebruikers in vijf dagen en circa 100 miljoen binnen twee maanden — de snelst groeiende consumenten-app ooit.",
+      impactLabel: "Publieke adoptie",
+      impactPct: 95,
+      sources: "OpenAI 'ChatGPT' (30 nov. 2022); Reuters/UBS gebruikersschattingen (jan. 2023).",
+    },
+  ],
+  "2023": [
+    {
+      period: "Jan – Mrt",
+      chips: ["GPT-4", "LLaMA", "Claude", "Bard"],
+      title: "De grote-modellen-wedloop barst los",
+      body: "GPT-4 (14 mrt.) brengt multimodale redeneerkracht; Meta's LLaMA jaagt open onderzoek aan; Microsoft (Bing), Google (Bard) en Anthropic (Claude) stappen in de strijd.",
+      impactLabel: "Concurrentie",
+      impactPct: 80,
+      sources:
+        "OpenAI 'GPT-4' (mrt. 2023); Meta 'LLaMA' (feb. 2023); Anthropic 'Claude' (mrt. 2023).",
+    },
+    {
+      period: "Apr – Jun",
+      chips: ["PaLM 2", "Falcon", "Pauze-brief"],
+      title: "Regulering en open modellen",
+      body: "Een open brief roept op tot een AI-pauze en de regelgevingsdiscussie versnelt. Google lanceert PaLM 2 en open modellen als Falcon winnen terrein.",
+      impactLabel: "Maatschappelijk debat",
+      impactPct: 65,
+      sources:
+        "Future of Life 'Pause AI' (mrt. 2023); Google 'PaLM 2' (mei 2023); TII 'Falcon' (mei 2023).",
+    },
+    {
+      period: "Jul – Sep",
+      chips: ["Llama 2", "Claude 2", "Mistral 7B"],
+      title: "Open modellen worden commercieel",
+      body: "Meta's Llama 2 mag commercieel gebruikt worden en zet open AI in een stroomversnelling. Claude 2 introduceert een venster van 100k tokens; Mistral 7B toont Europese slagkracht.",
+      impactLabel: "Open-source momentum",
+      impactPct: 70,
+      sources:
+        "Meta 'Llama 2' (jul. 2023); Anthropic 'Claude 2' (jul. 2023); Mistral AI 'Mistral 7B' (sep. 2023).",
+    },
+    {
+      period: "Okt – Dec",
+      chips: ["Gemini 1.0", "GPT-4 Turbo", "GPTs", "EU AI Act"],
+      title: "Gemini, GPT-store en wetgeving",
+      body: "Op OpenAI's DevDay verschijnen GPT-4 Turbo, custom GPT's en de Assistants API. Google kondigt Gemini aan en de EU bereikt een politiek akkoord over de AI Act.",
+      impactLabel: "Ecosysteem & beleid",
+      impactPct: 75,
+      sources:
+        "OpenAI DevDay (6 nov. 2023); Google 'Gemini' (6 dec. 2023); EU AI Act-akkoord (8 dec. 2023).",
+    },
+  ],
+  "2024": [
+    {
+      period: "Jan – Mrt",
+      chips: ["Claude 3", "Gemini 1.5", "Sora"],
+      title: "Multimodaal en lange context",
+      body: "Anthropic's Claude 3 (Opus/Sonnet/Haiku) en Google's Gemini 1.5 (1M-token context) zetten nieuwe standaarden. OpenAI's Sora demonstreert tekst-naar-video en het EU-parlement neemt de AI Act aan.",
+      impactLabel: "Capaciteitssprong",
+      impactPct: 78,
+      sources:
+        "Anthropic 'Claude 3' (4 mrt. 2024); Google 'Gemini 1.5' (feb. 2024); OpenAI 'Sora' (feb. 2024); EU AI Act (mrt. 2024).",
+    },
+    {
+      period: "Apr – Jun",
+      chips: ["GPT-4o", "Claude 3.5 Sonnet", "Apple Intelligence"],
+      title: "Realtime en alomtegenwoordig",
+      body: "OpenAI's GPT-4o brengt realtime spraak en vision; Anthropic's Claude 3.5 Sonnet zet de toon voor coderen. Apple kondigt 'Apple Intelligence' aan en brengt AI naar honderden miljoenen apparaten.",
+      impactLabel: "Consument & integratie",
+      impactPct: 82,
+      sources:
+        "OpenAI 'GPT-4o' (13 mei 2024); Anthropic 'Claude 3.5 Sonnet' (20 jun. 2024); Apple WWDC (jun. 2024).",
+    },
+    {
+      period: "Jul – Sep",
+      chips: ["Llama 3.1 405B", "OpenAI o1"],
+      title: "Open frontier & redeneermodellen",
+      body: "Meta's Llama 3.1 405B is het eerste open model op frontier-niveau. OpenAI's o1 introduceert modellen die 'nadenken' vóór ze antwoorden — een nieuwe schaalas voor AI.",
+      impactLabel: "Redeneervermogen",
+      impactPct: 80,
+      sources: "Meta 'Llama 3.1 405B' (23 jul. 2024); OpenAI 'o1-preview' (12 sep. 2024).",
+    },
+    {
+      period: "Okt – Dec",
+      chips: ["Gemini 2.0", "Computer use", "o3"],
+      title: "Het tijdperk van de AI-agent",
+      body: "Anthropic geeft Claude 'computer use' om zelf een computer te bedienen; Google's Gemini 2.0 Flash is gebouwd voor agents. OpenAI kondigt het krachtige o3 aan.",
+      impactLabel: "Autonomie",
+      impactPct: 85,
+      sources:
+        "Anthropic 'computer use' (22 okt. 2024); Google 'Gemini 2.0 Flash' (11 dec. 2024); OpenAI 'o3' (20 dec. 2024).",
+    },
+  ],
+  "2025": [
+    {
+      period: "Jan – Mrt",
+      chips: ["DeepSeek R1", "Claude 3.7", "GPT-4.5", "Gemini 2.5 Pro"],
+      title: "De DeepSeek-schok",
+      body: "Het open redeneermodel DeepSeek R1 evenaart OpenAI's o1 tegen een fractie van de kosten; op 27 jan. verliest Nvidia 18% (~$589 mld) beurswaarde. Anthropic brengt het hybride Claude 3.7 Sonnet, Google lanceert Gemini 2.5 Pro.",
+      impactLabel: "Marktschok",
+      impactPct: 92,
+      sources:
+        "DeepSeek 'R1' (20 jan. 2025); Anthropic 'Claude 3.7 Sonnet' (24 feb. 2025); Google 'Gemini 2.5 Pro' (mrt. 2025).",
+    },
+    {
+      period: "Apr – Jun",
+      chips: ["Claude 4", "o3 / o4-mini", "Llama 4", "Gemini 2.5"],
+      title: "Frontier-modellen op stoom",
+      body: "Anthropic lanceert Claude Opus 4 en Sonnet 4 (22 mei); OpenAI brengt o3 en o4-mini. Meta's Llama 4 en Google's Gemini 2.5 (met Veo 3-video) houden het tempo hoog.",
+      impactLabel: "Capaciteitsrace",
+      impactPct: 86,
+      sources:
+        "Anthropic 'Claude Opus 4 & Sonnet 4' (22 mei 2025); OpenAI 'o3/o4-mini' (16 apr. 2025); Meta 'Llama 4' (apr. 2025); Google I/O (mei 2025).",
+    },
+    {
+      period: "Jul – Sep",
+      chips: ["GPT-5", "Claude Opus 4.1", "Grok 4"],
+      title: "GPT-5 en de unified router",
+      body: "OpenAI lanceert GPT-5 (7 aug.): één systeem dat automatisch wisselt tussen een snelle en een diep-redenerende modus. Anthropic volgt met Claude Opus 4.1; xAI met Grok 4.",
+      impactLabel: "Volwassenheid",
+      impactPct: 84,
+      sources:
+        "OpenAI 'GPT-5' (7 aug. 2025); Anthropic 'Claude Opus 4.1' (aug. 2025); xAI 'Grok 4' (jul. 2025).",
+    },
+    {
+      period: "Okt – Dec",
+      chips: ["Gemini 3 Pro", "Claude Opus 4.5", "GPT-5.1"],
+      title: "Frontier-race op topsnelheid",
+      body: "Binnen één week verschijnen Google's Gemini 3 Pro (18 nov.) en Anthropic's Claude Opus 4.5 (24 nov.), gevolgd door OpenAI's GPT-5.1. De voorsprong tussen aanbieders slinkt tot dagen.",
+      impactLabel: "Concurrentietempo",
+      impactPct: 88,
+      sources:
+        "Google 'Gemini 3 Pro' (18 nov. 2025); Anthropic 'Claude Opus 4.5' (24 nov. 2025); OpenAI 'GPT-5.1' (nov. 2025).",
+    },
+  ],
+};
+
+const AUTOPLAY_MS = 7000;
+
+// Eén index over de hele tijdlijn: jaar (0–3) + kwartaal (0–3).
+const yearIndex = ref(0);
+const quarterIndex = ref(0);
+
+const activeYear = computed(() => YEARS[yearIndex.value]);
+const quarters = computed(() => MILESTONES[activeYear.value]);
+const current = computed(() => quarters.value[quarterIndex.value]);
+
+// Stap door de volledige tijdlijn: na Q4 rolt het door naar Q1 van het volgende
+// jaar (en 2025-Q4 → 2022-Q1), zodat de slider naadloos blijft lopen.
+function go(dir: number) {
+  let q = quarterIndex.value + dir;
+  let y = yearIndex.value;
+  if (q > 3) {
+    q = 0;
+    y = (y + 1) % YEARS.length;
+  } else if (q < 0) {
+    q = 3;
+    y = (y - 1 + YEARS.length) % YEARS.length;
+  }
+  quarterIndex.value = q;
+  yearIndex.value = y;
 }
-// TODO: per-year mijlpaal-detail + pagination vereisen een dataset met alle
-// mijlpalen; nu wisselt alleen de jaar-markering.
+
+const playing = ref(true);
+let timer: ReturnType<typeof setInterval> | undefined;
+
+function stop() {
+  if (timer !== undefined) {
+    clearInterval(timer);
+    timer = undefined;
+  }
+}
+function start() {
+  stop();
+  if (!playing.value) return;
+  timer = setInterval(() => go(1), AUTOPLAY_MS);
+}
+function togglePlay() {
+  playing.value = !playing.value;
+  playing.value ? start() : stop();
+}
+
+// Handmatige interactie verzet de inhoud én herstart de autoplay-timer, zodat de
+// gebruiker tijd krijgt om te lezen voordat de slider weer doorschuift.
+function selectYear(i: number) {
+  yearIndex.value = i;
+  quarterIndex.value = 0;
+  start();
+}
 function step(dir: number) {
-  const i = YEARS.indexOf(activeYear.value);
-  activeYear.value = YEARS[(i + dir + YEARS.length) % YEARS.length];
+  go(dir);
+  start();
 }
+
+onMounted(start);
+onBeforeUnmount(stop);
 
 const costRows = [
   { model: "PaLM", org: "Google", year: "2022", cost: "~$9 miljoen", params: "540B" },
@@ -165,60 +394,62 @@ const economicStats = [
 
       <div class="afs-year-track mt-6">
         <button
-          v-for="year in YEARS"
+          v-for="(year, i) in YEARS"
           :key="year"
           type="button"
           class="afs-yr"
-          :class="{ 'afs-yr--active': activeYear === year }"
-          @click="selectYear(year)"
+          :class="{ 'afs-yr--active': yearIndex === i }"
+          @click="selectYear(i)"
         >
           {{ year }}
         </button>
       </div>
 
-      <div class="mt-6 rounded-cf bg-form p-6 lg:p-12">
+      <!-- vaste minimumhoogte op desktop: inhoud wisselt binnenin, maar de pager
+           en knoppen eronder verspringen niet meer per kwartaal -->
+      <div
+        class="mt-6 flex flex-col justify-center rounded-cf bg-form p-6 lg:min-h-[460px] lg:p-12"
+        @mouseenter="stop"
+        @mouseleave="start"
+      >
         <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-          <!-- left: process diagram -->
+          <!-- left: key releases of the active quarter -->
           <div class="lg:col-span-5">
-            <div class="mb-4"><span class="afs-chip afs-chip--lg">Mei - Oktober</span></div>
-            <div class="afs-process-box">
-              <div class="afs-process">
-                <span class="afs-chip">Brainstorm</span>
-                <span class="afs-chip">Plan</span>
-                <span class="afs-chip">Design</span>
-                <span class="afs-chip">Bouw</span>
-                <span class="afs-chip afs-chip--lg afs-chip--green afs-hub">AI Agent</span>
+            <div class="mb-4">
+              <span class="afs-chip afs-chip--lg">{{ current.period }} {{ activeYear }}</span>
+            </div>
+            <div class="rounded-cf bg-white px-7 py-6">
+              <div class="afs-t-cap mb-4 text-muted">Belangrijkste releases</div>
+              <div class="flex flex-wrap gap-[10px]">
+                <span
+                  v-for="(chip, ci) in current.chips"
+                  :key="chip"
+                  class="afs-chip"
+                  :class="{ 'afs-chip--green': ci === 0 }"
+                >
+                  {{ chip }}
+                </span>
               </div>
             </div>
           </div>
 
-          <!-- right: milestone detail (TODO: per-year content from a dataset) -->
+          <!-- right: milestone detail for the active quarter -->
           <div class="lg:col-span-7">
-            <h3 class="afs-t-h2 mb-4 text-black">
-              AI-agenten — Autonome taakuitvoering
-            </h3>
-            <p class="afs-t-body max-w-[680px]">
-              GPT-4o (mei), Claude 3.5 Sonnet (jun.) en Gemini 1.5 Pro markeren het
-              tijdperk van de AI-agent. Systemen plannen, zoeken en voeren
-              meerstapstaken zelfstandig uit. McKinsey schat dat 60–70% van
-              kenniswerk automatiseerbaar wordt.
-            </p>
+            <h3 class="afs-t-h2 mb-4 text-black">{{ current.title }}</h3>
+            <p class="afs-t-body max-w-[680px]">{{ current.body }}</p>
 
             <div class="mt-6 max-w-[680px]">
-              <div class="afs-t-body mb-2 text-black">Arbeidsmarkt Impact</div>
-              <div class="afs-progress-line"><span /></div>
+              <div class="afs-t-body mb-2 text-black">{{ current.impactLabel }}</div>
+              <div class="afs-progress-line">
+                <span :style="{ width: current.impactPct + '%' }" />
+              </div>
               <div class="afs-t-cap relative mt-2 h-[1.4em]">
-                <span class="absolute left-0">0%</span>
-                <span class="absolute left-[88%] -translate-x-1/2">95%</span>
-                <span class="absolute right-0">100%</span>
+                <span class="absolute left-0">Laag</span>
+                <span class="absolute right-0">Hoog</span>
               </div>
             </div>
 
-            <p class="afs-t-src mt-6 max-w-[680px]">
-              Bronnen: OpenAI product announcements (mei 2024); McKinsey Global
-              Institute "The economic potential of generative AI" (jun. 2023);
-              Reuters ChatGPT 200M users (aug. 2024).
-            </p>
+            <p class="afs-t-src mt-6 max-w-[680px]">Bronnen: {{ current.sources }}</p>
           </div>
         </div>
       </div>
@@ -229,15 +460,27 @@ const economicStats = [
           <button type="button" class="afs-nav-square" aria-label="vorige" @click="step(-1)">
             <IconArrowLeft class="h-6 w-6" />
           </button>
-          <!-- TODO: pagination weerspiegelt 9 mijlpalen zodra die als data bestaan. -->
+          <!-- één stip per kwartaal van het actieve jaar -->
           <div class="afs-dots">
-            <i /><i /><i /><i /><i /><i /><i /><i class="afs-on" /><i />
+            <i v-for="(m, qi) in quarters" :key="qi" :class="{ 'afs-on': qi === quarterIndex }" />
           </div>
           <button type="button" class="afs-nav-square" aria-label="volgende" @click="step(1)">
             <IconArrow class="h-6 w-6" />
           </button>
         </div>
-        <div class="pageno mt-2 text-center text-base text-muted">9/9</div>
+        <div class="mt-3 flex items-center justify-center gap-4">
+          <span class="pageno text-base text-muted">
+            Kwartaal {{ quarterIndex + 1 }} / 4 · {{ activeYear }}
+          </span>
+          <button
+            type="button"
+            class="text-base text-muted underline underline-offset-4"
+            :aria-label="playing ? 'pauzeer slider' : 'speel slider af'"
+            @click="togglePlay"
+          >
+            {{ playing ? "Pauze" : "Afspelen" }}
+          </button>
+        </div>
       </div>
     </div>
   </section>
