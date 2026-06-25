@@ -42,11 +42,11 @@ async function onBack() {
 
     <template v-if="rows.length">
       <div class="mx-auto mt-7 max-w-[1250px] text-left lg:mt-[33px]">
-        <!-- Metric-filters: 'Alles' links (boven de respons-kaart); de vier
-             metric-tabs rechts, uitgelijnd boven hun tegels (zelfde breedte +
-             gap als de ResultRow-metrics). -->
+        <!-- Metric-filters: 'Alles' rechts uitgelijnd boven de respons-kaart; de
+             vier metric-tabs rechts, uitgelijnd boven hun tegels (zelfde breedte
+             + gap als de ResultRow-metrics). -->
         <div class="mb-7 flex flex-wrap items-center gap-12 xl:flex-nowrap">
-          <div class="w-full xl:max-w-[600px] xl:flex-[1_1_560px]">
+          <div class="flex w-full justify-end xl:max-w-[600px] xl:flex-[1_1_560px]">
             <button
               type="button"
               class="afs-metric-tab"
