@@ -52,16 +52,24 @@ interface MetricDef {
   unit: string;
   maxIcons: number;
   decimals: number;
-  // Illustrative reference for the "compare" analogy.
+  // Reference for the everyday "compare" analogy. In the default ("count") mode
+  // the analogy is `value / ref` of `refLabel`; in "perEuro" mode it is the
+  // number of these prompts that fit in €1 (1 / value).
   ref: number;
   refLabel: string;
+  refMode?: "count" | "perEuro";
 }
 
+// Conversion factors for the everyday analogies:
+//   energy — a 10 W LED lamp draws 10/3600 ≈ 0,00278 Wh per second.
+//   water  — one drop of water is roughly 0,05 ml.
+//   co2    — a human exhales ~1 kg CO₂/day over ~22.000 breaths ≈ 0,045 g/breath.
+//   cost   — shown as how many of these prompts fit in €1 (inverse of the price).
 export const METRICS: MetricDef[] = [
-  { key: "energy", label: "Energie", field: "energyWh", iconId: "ic-bolt", iconKind: "bolt", unit: "Wh", maxIcons: 6, decimals: 3, ref: 0.001, refLabel: "min licht aan" },
-  { key: "water", label: "Water", field: "waterMl", iconId: "ic-drop", iconKind: "drop", unit: "ml", maxIcons: 6, decimals: 2, ref: 0.06, refLabel: "glazen" },
-  { key: "co2", label: "CO2", field: "co2Grams", iconId: "ic-cloud", iconKind: "cloud", unit: "g", maxIcons: 6, decimals: 3, ref: 0.1, refLabel: "ademteug" },
-  { key: "cost", label: "Kosten", field: "costEur", iconId: "ic-coin", iconKind: "coin", unit: "euro", maxIcons: 9, decimals: 4, ref: 0.0001, refLabel: "jaar Zuyd" },
+  { key: "energy", label: "Energie", field: "energyWh", iconId: "ic-bolt", iconKind: "bolt", unit: "Wh", maxIcons: 6, decimals: 3, ref: 0.00278, refLabel: "sec lamp aan" },
+  { key: "water", label: "Water", field: "waterMl", iconId: "ic-drop", iconKind: "drop", unit: "ml", maxIcons: 6, decimals: 2, ref: 0.05, refLabel: "druppels" },
+  { key: "co2", label: "CO2", field: "co2Grams", iconId: "ic-cloud", iconKind: "cloud", unit: "g", maxIcons: 6, decimals: 3, ref: 0.045, refLabel: "ademteugen" },
+  { key: "cost", label: "Kosten", field: "costEur", iconId: "ic-coin", iconKind: "coin", unit: "euro", maxIcons: 9, decimals: 4, ref: 1, refMode: "perEuro", refLabel: "vragen voor €1" },
 ];
 
 // Provider → brand logo (mirrors ModelSelectCard).
@@ -81,9 +89,19 @@ export function iconCount(value: number, min: number, max: number, maxIcons: num
   return 1 + Math.round(norm * (maxIcons - 1));
 }
 
-// Illustrative human comparison.
-// TODO: replace the ref constants with real values from the Technical Design.
+// Group a whole number with "." thousands separators (Dutch convention).
+function groupThousands(n: number): string {
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// Everyday comparison derived from the metric value (see METRICS for the factors).
+// "perEuro" expresses cost as how many such prompts fit in €1; the others count
+// how many of the everyday unit this prompt equals (minimum 1).
 export function analogy(value: number, def: MetricDef): string {
+  if (def.refMode === "perEuro") {
+    const n = value > 0 ? Math.round(1 / value) : 0;
+    return `~ ${groupThousands(n)} ${def.refLabel}`;
+  }
   const n = Math.max(1, Math.round(value / def.ref));
   return `~ ${n} ${def.refLabel}`;
 }

@@ -11,7 +11,7 @@ function tile(over: Partial<TileVm> = {}): TileVm {
     iconKind: "bolt",
     count: 3,
     valueText: "0.003 Wh",
-    compareText: "~ 3 min licht aan",
+    compareText: "~ 23 sec lamp aan",
     active: false,
     champion: false,
     ...over,
@@ -30,7 +30,7 @@ describe("components/MetricTile.vue", () => {
     const wrapper = await mountSuspended(MetricTile, { props: { tile: tile() } });
     const text = wrapper.text();
     expect(text).toContain("Energie");
-    expect(text).toContain("~ 3 min licht aan");
+    expect(text).toContain("~ 23 sec lamp aan");
     expect(text).toContain("0.003 Wh");
   });
 

@@ -12,6 +12,7 @@ import type { CompareResult } from "~/composables/useCompare";
 
 const energyDef = METRICS.find((m) => m.key === "energy")!;
 const waterDef = METRICS.find((m) => m.key === "water")!;
+const costDef = METRICS.find((m) => m.key === "cost")!;
 
 function result(
   id: string,
@@ -47,8 +48,13 @@ describe("utils/results", () => {
   });
 
   it("analogy gebruikt het label en is minimaal 1", () => {
-    expect(analogy(0.12, waterDef)).toBe("~ 2 glazen");
-    expect(analogy(0, waterDef)).toBe("~ 1 glazen");
+    expect(analogy(0.12, waterDef)).toBe("~ 2 druppels"); // 0,12 ml / 0,05 ≈ 2
+    expect(analogy(0, waterDef)).toBe("~ 1 druppels");
+  });
+
+  it("analogy toont kosten als aantal vragen voor €1 (met duizendtallen)", () => {
+    expect(analogy(0.0001, costDef)).toBe("~ 10.000 vragen voor €1"); // 1 / 0,0001
+    expect(analogy(0, costDef)).toBe("~ 0 vragen voor €1");
   });
 
   it("formatValue formatteert met de juiste decimalen en eenheid", () => {
