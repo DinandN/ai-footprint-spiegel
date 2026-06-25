@@ -66,6 +66,8 @@ function selectVariant(group: ProviderGroup, id: string) {
 }
 
 // Example prompts for the "Verras me" (surprise me) button.
+// Keep in sync with backend/db/exampleQuestions.js — the response cache is keyed
+// by the exact prompt text, so these are the prompts that get pre-cached.
 const EXAMPLES = [
   "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
   "Schrijf een kort gedicht over de zee bij zonsondergang.",

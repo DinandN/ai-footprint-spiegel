@@ -1,0 +1,258 @@
+[
+  {
+    "modelId": "claude-haiku-4-5",
+    "prompt": "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
+    "promptHash": "06840bffa1bd8026f3822e90174790b420c18534c8590209c45a01a6982be9e7",
+    "text": "# Quantum Computing\n\nQuantum computing is een revolutionair type computer dat gebruik maakt van de rare regels van de quantumfysica om veel sneller berekeningen uit te voeren dan normale computers. Een gewone computer werkt met bits die 0 of 1 zijn, maar een quantumcomputer gebruikt 'qubits' die dankzij quantummechanica tegelijkertijd 0 én 1 kunnen zijn – dit heet 'superposie'. Dit betekent dat een quantumcomputer veel meer mogelijkheden tegelijk kan uitproberen, wat hem ongelooflijk snel maakt voor bepaalde problemen. Het voordeel is enorm voor taken zoals het kraken van codes, het simuleren van moleculen of het optimaliseren van complexe problemen, maar de technologie is nog erg nieuw en moeilijk, omdat qubits heel erg gevoelig zijn en hun quantumtoestand snel kwijtraken als ze worden verstoord. Hoewel we nog jaren af zijn van quantumcomputers die alledaagse apparaten vervangen, werken tech-bedrijven en universiteiten hard om deze technologie praktisch bruikbaar te maken.",
+    "inputTokens": 27,
+    "outputTokens": 282
+  },
+  {
+    "modelId": "claude-opus-4-8",
+    "prompt": "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
+    "promptHash": "06840bffa1bd8026f3822e90174790b420c18534c8590209c45a01a6982be9e7",
+    "text": "**Quantumcomputing in het kort**\n\nEen gewone computer werkt met bits, die altijd óf een 0 óf een 1 zijn, een beetje zoals een lichtschakelaar die aan of uit staat. Een quantumcomputer gebruikt zogenaamde qubits, en die kunnen dankzij de bijzondere regels van de quantummechanica tegelijk een soort mix van 0 én 1 zijn (dit heet \"superpositie\"). Daardoor kan een quantumcomputer heel veel mogelijkheden tegelijk verkennen in plaats van één voor één. Bovendien kunnen qubits met elkaar \"verstrengeld\" raken, waardoor ze elkaars toestand beïnvloeden, zelfs op afstand. Hierdoor kunnen quantumcomputers bepaalde ingewikkelde problemen – zoals het kraken van codes of het nabootsen van moleculen voor nieuwe medicijnen – veel sneller oplossen dan gewone computers. Ze zijn nog volop in ontwikkeling en lastig te bouwen, maar wetenschappers verwachten dat ze in de toekomst heel krachtig kunnen worden.",
+    "inputTokens": 34,
+    "outputTokens": 410
+  },
+  {
+    "modelId": "claude-sonnet-4-6",
+    "prompt": "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
+    "promptHash": "06840bffa1bd8026f3822e90174790b420c18534c8590209c45a01a6982be9e7",
+    "text": "Quantumcomputing is een nieuwe manier van rekenen waarbij gebruik wordt gemaakt van de bijzondere regels van de kwantummechanica. Normale computers werken met bits, die alleen een 0 of een 1 kunnen zijn, maar quantumcomputers gebruiken **qubits**, die tegelijkertijd 0 én 1 kunnen zijn – dit heet **superpositie**. Hierdoor kan een quantumcomputer als het ware heel veel mogelijkheden tegelijk uitproberen, in plaats van één voor één. Daarnaast kunnen qubits met elkaar \"verstrengeld\" zijn, zodat ze elkaar beïnvloeden ongeacht de afstand. Dit maakt quantumcomputers extreem krachtig voor bepaalde problemen, zoals het kraken van codes of het simuleren van moleculen voor nieuwe medicijnen, al zijn ze nog niet voor alles sneller dan gewone computers.",
+    "inputTokens": 27,
+    "outputTokens": 219
+  },
+  {
+    "modelId": "gemini-2.5-flash",
+    "prompt": "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
+    "promptHash": "06840bffa1bd8026f3822e90174790b420c18534c8590209c45a01a6982be9e7",
+    "text": "Kwantumcomputing is een radicaal nieuwe manier van rekenen die, in tegenstelling tot gewone computers die met bits (0 of 1) werken, gebruikmaakt van 'qubits'. Deze qubits kunnen dankzij kwantummechanische eigenschappen zoals 'superpositie' tegelijkertijd 0 én 1 zijn, en via 'verstrengeling' direct met elkaar verbonden zijn, zelfs over afstand. Door deze unieke eigenschappen kunnen kwantumcomputers enorme hoeveelheden berekeningen tegelijkertijd uitvoeren, waardoor ze in de toekomst complexe problemen kunnen oplossen die voor klassieke computers onmogelijk zijn, zoals het ontwerpen van nieuwe medicijnen, materialen, of het kraken van bepaalde encryptie.",
+    "inputTokens": 16,
+    "outputTokens": 151
+  },
+  {
+    "modelId": "llama-3.2-3b",
+    "prompt": "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
+    "promptHash": "06840bffa1bd8026f3822e90174790b420c18534c8590209c45a01a6982be9e7",
+    "text": "Quantum computing is een nieuwe manier van computerschappen waarbij de informatie op meerdere punten tegelijkert wordt verwerkt, waardoor het een enorm groter bereik en sneller rekenvermogen heeft dan traditionele computers. Dit werkt omdat quantumbewijszinnigheid ervan uitgaat dat een deel van de materie tegelijkert bestaat in meerdere toestandsmogelijkheden, waardoor het mogelijk is om een enorme hoeveelheid informatie op te slaan en te verwerken op een heel kleine manier.",
+    "inputTokens": 44,
+    "outputTokens": 129
+  },
+  {
+    "modelId": "qwen-2.5-3b",
+    "prompt": "Leg quantumcomputing uit in één alinea voor een middelbare scholier.",
+    "promptHash": "06840bffa1bd8026f3822e90174790b420c18534c8590209c45a01a6982be9e7",
+    "text": "Quantum computing is een innovatieve vorm van computeronderwijs die zich richt op de gebruikmaking van keten van partikelen, zoals atomen en molecuolen, om snelere berekeningen te kunnen uitvoeren dan standaardige huidige computers. Dit concept staat op het punt om een revolutionaire aanpak binnen de informatiedomein toe te voegen door nieuwe methoden voor encryptie, simulatie van chemische proces en cryptografie te ontwikkelen.",
+    "inputTokens": 47,
+    "outputTokens": 106
+  },
+  {
+    "modelId": "claude-haiku-4-5",
+    "prompt": "Schrijf een kort gedicht over de zee bij zonsondergang.",
+    "promptHash": "3ea0430425f06db23bfdf80ce965d5f0a5068f345d74bd043322dae5159f53ea",
+    "text": "# Zee bij Zonsondergang\n\nDe zon daalt laag naar wateren diep,\nVerspreidt goud en rood in vloeïende strepen.\nDe golven fluisteren hun avondlied,\nTerwijl het licht langzaam uit de hemel vlied.\n\nDe horizon gloedt in vuurige glans,\nDe zee weerspiegelt deze dans.\nEn als de dag zich sluit met stille kracht,\nVerzinkt de wereld zachtjes in de nacht.",
+    "inputTokens": 23,
+    "outputTokens": 128
+  },
+  {
+    "modelId": "claude-opus-4-8",
+    "prompt": "Schrijf een kort gedicht over de zee bij zonsondergang.",
+    "promptHash": "3ea0430425f06db23bfdf80ce965d5f0a5068f345d74bd043322dae5159f53ea",
+    "text": "**Zee bij zonsondergang**\n\nDe golven dansen, zacht en traag,\nhet water kleurt in goud en vuur.\nDe zon daalt neer, een laatste vraag,\ngefluisterd in het avonduur.\n\nDe hemel bloost in rood en roze,\nde meeuwen zwijgen in de wind.\nDe dag neemt afscheid, sereen en broos,\nwaar zee en hemel zich verbindt.",
+    "inputTokens": 31,
+    "outputTokens": 144
+  },
+  {
+    "modelId": "claude-sonnet-4-6",
+    "prompt": "Schrijf een kort gedicht over de zee bij zonsondergang.",
+    "promptHash": "3ea0430425f06db23bfdf80ce965d5f0a5068f345d74bd043322dae5159f53ea",
+    "text": "# Avondzee\n\nDe zon daalt langzaam naar het water,\nschildert goud op elke golf.\nHet strand ligt stil, de dag wordt zachter,\nde zee zucht diep en wordt geolf.\n\nRood en oranje smelten samen,\nhet licht verdwijnt in zilte nacht.\nDe golven fluisteren oude namen\naan iedereen die eenzaam wacht.",
+    "inputTokens": 23,
+    "outputTokens": 103
+  },
+  {
+    "modelId": "gemini-2.5-flash",
+    "prompt": "Schrijf een kort gedicht over de zee bij zonsondergang.",
+    "promptHash": "3ea0430425f06db23bfdf80ce965d5f0a5068f345d74bd043322dae5159f53ea",
+    "text": "De zon zakt weg, een vurig rood,\nVerft 't watervlak, breed en groot.\n\nDe golven wiegen zachtjes voort,\nEen fluistering, een vredig akkoord.\n\nHet licht verbleekt, de dag gaat heen,\nEen diepe rust daalt nu sereen.",
+    "inputTokens": 16,
+    "outputTokens": 70
+  },
+  {
+    "modelId": "gemini-2.5-flash-lite",
+    "prompt": "Schrijf een kort gedicht over de zee bij zonsondergang.",
+    "promptHash": "3ea0430425f06db23bfdf80ce965d5f0a5068f345d74bd043322dae5159f53ea",
+    "text": "Zonsondergang, de zee kleurt rood,\nGouden stralen dansen op de golf.\nStilte daalt, de dag gaat dood,\nEen prachtig schouwspel, hemel en golf.\n\nDe zon zakt, als een vuurbal,\nVerdwijnend in de horizon.\nDe golven fluisteren een laatste lied,\nEen adembenemend visioen.",
+    "inputTokens": 16,
+    "outputTokens": 88
+  },
+  {
+    "modelId": "llama-3.2-3b",
+    "prompt": "Schrijf een kort gedicht over de zee bij zonsondergang.",
+    "promptHash": "3ea0430425f06db23bfdf80ce965d5f0a5068f345d74bd043322dae5159f53ea",
+    "text": "Bij zonsondergang, waar licht doet verduinen,\nStaat de zee nog steeds, met glanzende schijn.\nDe golven dansen, als het water zich beweegt,\nEn in de verte, een hemel vol kleuren brengt.\n\nDe zon daalt langzaam naar beneden,\nEn met hem, de licht die het dag verduint.\nMaar ook hier, blijft de zee nog steeds,\nMet een sfeer van vrede, en rustigheid.\n\nIn deze momenten, voel je je vrij,\nAls de wereld stil is, en niets te doen heeft.\nDe zee roept je uit, om te genieten,\nEn in haar beweging, vind je vrede.",
+    "inputTokens": 43,
+    "outputTokens": 166
+  },
+  {
+    "modelId": "qwen-2.5-3b",
+    "prompt": "Schrijf een kort gedicht over de zee bij zonsondergang.",
+    "promptHash": "3ea0430425f06db23bfdf80ce965d5f0a5068f345d74bd043322dae5159f53ea",
+    "text": "Zonsondergang op de Zeeën\n\nZonsondergang valt in de oceaan,\nVlekken van lantaarnvleugels, een aquarel.\nGouden stralen die zich uitstrekken,\nBrijden de stilte door het water.\n\nDe zee is een helder witte wol,\nDie glanst onder de donkere hemel.\nHet geluid van vreemde golven,\nZingt een melodie voorzichtig en onvergetelijk. \n\nGouden stralen die zich uitstrekken, \nMeten hun eeuwige, oneindig loop.\nEen symfonie van licht op zeeën, \nDie altijd leven in stilte en verleiding.",
+    "inputTokens": 47,
+    "outputTokens": 161
+  },
+  {
+    "modelId": "claude-haiku-4-5",
+    "prompt": "Wat zijn drie praktische tips om thuis energie te besparen?",
+    "promptHash": "8f3a13d2d560dd25832954786b7daa82e1928276fae4c9e90bdc2ef166bfcaec",
+    "text": "# Drie praktische energbespaartips\n\n## 1. **Verlichting optimaliseren**\n- Vervang gloeillampen door LED-lampen (gebruiken 80% minder energie)\n- Zet licht uit wanneer je een kamer verlaat\n- Maak gebruik van daglicht waar mogelijk\n\n## 2. **Thermostaat slimmer instellen**\n- Stel de temperatuur 1-2°C lager in (bespaart ~6% per graad)\n- Gebruik een programmeerbare thermostaat\n- Sluit deuren van ongebruikte kamers om minder te hoeven verwarmen\n\n## 3. **Apparaten efficiënter gebruiken**\n- Schakel standby-modus uit met stekkerdozen met schakelaar\n- Was vol machines (wasmachine, vaatwasser)\n- Zet de koelkast op 4°C en de vriezer op -18°C\n\n**Bonustip:** Een energiemeter helpt om energievreters in huis op te sporen.\n\nDeze maatregelen geven vaak al direct merkbare resultaten op je energierekening!",
+    "inputTokens": 23,
+    "outputTokens": 285
+  },
+  {
+    "modelId": "claude-opus-4-8",
+    "prompt": "Wat zijn drie praktische tips om thuis energie te besparen?",
+    "promptHash": "8f3a13d2d560dd25832954786b7daa82e1928276fae4c9e90bdc2ef166bfcaec",
+    "text": "# Drie Praktische Tips om Thuis Energie te Besparen\n\n## 1. Verlaag je verwarming en isoleer slim\n- Zet de thermostaat 1 graad lager — dit kan al zo'n 6% besparen op je stookkosten\n- Gebruik tochtstrips bij ramen en deuren\n- Sluit 's avonds gordijnen om warmte binnen te houden\n- Draai de verwarming lager in ruimtes die je weinig gebruikt\n\n## 2. Pak je apparaten en verlichting aan\n- Schakel apparaten echt uit in plaats van op stand-by (een stekkerblok met schakelaar helpt hierbij)\n- Vervang oude lampen door **LED-verlichting**, die veel zuiniger zijn\n- Was op lagere temperaturen (30-40°C is vaak prima) en gebruik de eco-stand\n- Laat de wasdroger staan en hang was zoveel mogelijk op\n\n## 3. Wees bewust met warm water\n- Neem kortere douches en overweeg een waterbesparende douchekop\n- Was waar mogelijk met koud of lauw water\n- Zet de boiler of geiser niet warmer dan nodig\n\n---\n\n**Bonus:** Veel besparing zit in gewoontes. Door bewuster om te gaan met verwarming, verlichting en water merk je vaak al snel verschil op je energierekening.\n\nWil je dat ik dieper inga op één van deze tips of op grotere investeringen zoals zonnepanelen of isolatie?",
+    "inputTokens": 30,
+    "outputTokens": 524
+  },
+  {
+    "modelId": "claude-sonnet-4-6",
+    "prompt": "Wat zijn drie praktische tips om thuis energie te besparen?",
+    "promptHash": "8f3a13d2d560dd25832954786b7daa82e1928276fae4c9e90bdc2ef166bfcaec",
+    "text": "# Drie Praktische Tips om Energie te Besparen\n\n## 1. 🌡️ Verlaag de thermostaat\n- Zet de verwarming **1°C lager** — dit bespaart ongeveer **6% energie**\n- Gebruik een **slimme thermostaat** of tijdklok\n- Verwarm slaapkamers minder (bijv. 16°C in plaats van 20°C)\n\n## 2. 💡 Vervang verlichting en schakel apparaten echt uit\n- Gebruik **LED-lampen** in plaats van gloeilampen\n- Zet apparaten **volledig uit** in plaats van op standby\n- Een televisie op standby verbruikt het hele jaar door onnodig stroom\n\n## 3. 🚿 Beperk warm waterverbruik\n- Neem **kortere douches** (elke minuut minder scheelt veel)\n- Draai de **boiler iets lager** (60°C is voldoende en veilig)\n- Gebruik de **eco-stand** van de vaatwasser of wasmachine\n\n---\n\n**Bonus:** Controleer of ramen en deuren goed geïsoleerd zijn — tochtstrips zijn goedkoop en effectief.\n\nWil je meer weten over een van deze tips?",
+    "inputTokens": 23,
+    "outputTokens": 331
+  },
+  {
+    "modelId": "gemini-2.5-flash",
+    "prompt": "Wat zijn drie praktische tips om thuis energie te besparen?",
+    "promptHash": "8f3a13d2d560dd25832954786b7daa82e1928276fae4c9e90bdc2ef166bfcaec",
+    "text": "Hier zijn drie praktische tips om thuis energie te besparen:\n\n1.  **Verlaag de thermostaat en kleed je warmer aan:**\n    *   Zet de thermostaat een graadje lager, vooral 's nachts of als je niet thuis bent. Elke graad minder kan al 6-7% besparen op je verwarmingskosten.\n    *   Trek binnenshuis een extra trui, vest of warme sokken aan. Vaak is het met wat warmere kleding comfortabel genoeg om de verwarming iets lager te zetten.\n\n2.  **Schakel apparaten volledig uit en trek stekkers uit het stopcontact:**\n    *   Veel apparaten verbruiken energie, ook als ze op stand-by staan (sluipverbruik). Denk aan televisies, computers, opladers, audioapparatuur en koffiezetapparaten.\n    *   Gebruik stekkerdozen met een aan/uit-schakelaar of trek de stekker eruit wanneer je een apparaat langere tijd niet gebruikt.\n\n3.  **Douche korter en minder warm, en was kleding op lagere temperaturen:**\n    *   De verwarming van water voor douchen en wassen kost veel energie. Probeer je douchetijd te verkorten (bijvoorbeeld naar 5 minuten) en douche met een iets lagere temperatuur.\n    *   Was je kleding vaker op 20 of 30 graden in plaats van 40 graden of hoger. Moderne wasmiddelen zijn hier prima voor geschikt en het scheelt aanzienlijk in energieverbruik. Wacht ook tot je wasmachine of vaatwasser helemaal vol is voordat je deze aanzet.",
+    "inputTokens": 13,
+    "outputTokens": 369
+  },
+  {
+    "modelId": "gemini-2.5-flash-lite",
+    "prompt": "Wat zijn drie praktische tips om thuis energie te besparen?",
+    "promptHash": "8f3a13d2d560dd25832954786b7daa82e1928276fae4c9e90bdc2ef166bfcaec",
+    "text": "Hier zijn drie praktische tips om thuis energie te besparen:\n\n1.  **Pas je thermostaat slim aan:** Dit is een van de meest effectieve manieren om op verwarming te besparen, wat vaak een grote energievreter is.\n    *   **Verlaag de temperatuur 's nachts en wanneer je niet thuis bent:** Zelfs een paar graden minder kan al een significant verschil maken. Programmeerbare thermostaten zijn hier ideaal voor, maar je kunt het ook handmatig doen.\n    *   **Overweeg een slimme thermostaat:** Deze leren je gewoontes kennen en passen de temperatuur automatisch aan om energie te besparen. Sommige kun je zelfs op afstand bedienen met je smartphone.\n    *   **Tip:** Zorg voor goede isolatie, zodat de warmte binnen blijft en de kou buiten.\n\n2.  **Gebruik apparaten met mate en kies slim:** Veel huishoudelijke apparaten verbruiken stroom, zelfs in stand-by modus.\n    *   **Schakel apparaten volledig uit:** Trek opladers uit het stopcontact als ze niet in gebruik zijn en schakel apparaten die je niet constant gebruikt (zoals televisies) helemaal uit in plaats van ze op stand-by te laten staan. Gebruik eventueel stekkerdozen met een aan/uit-schakelaar.\n    *   **Kies voor energiezuinige apparaten:** Let bij de aanschaf van nieuwe apparaten op het energielabel. Een A+++ apparaat verbruikt veel minder energie dan een apparaat met een lager label.\n    *   **Tip:** Gebruik wasmachines en vaatwassers alleen als ze volledig beladen zijn en kies voor lagere temperaturen waar mogelijk.\n\n3.  **Verlichting efficiënt benutten:** Verlichting kan ook aardig oplopen in de energiekosten.\n    *   **Vervang gloeilampen door LED-lampen:** LED-lampen verbruiken tot wel 80% minder energie dan traditionele gloeilampen en gaan bovendien veel langer mee.\n    *   **Maak gebruik van natuurlijk licht:** Doe gordijnen open overdag en plaats eventueel lichte kleuren op muren om het licht beter te reflecteren.\n    *   **Schakel lichten uit wanneer je een ruimte verlaat:** Dit klinkt simpel, maar wordt vaak vergeten.\n    *   **Tip:** Overweeg bewegingssensoren voor buitenverlichting of in ruimtes waar je niet lang bent.\n\nDoor deze eenvoudige tips toe te passen, kun je direct besparen op je energierekening en tegelijkertijd een steentje bijdragen aan een beter milieu.",
+    "inputTokens": 13,
+    "outputTokens": 582
+  },
+  {
+    "modelId": "llama-3.2-3b",
+    "prompt": "Wat zijn drie praktische tips om thuis energie te besparen?",
+    "promptHash": "8f3a13d2d560dd25832954786b7daa82e1928276fae4c9e90bdc2ef166bfcaec",
+    "text": "Hier zijn drie praktische tips om thuis energie te besparen:\n\n1. **Licht uitknippen**: Licht opvullen met zonnigeuren of LED-lichten, en bewaar het onnodige aantal keer per dag dat je de lampen aantreft. Als je een automatische switch in huis hebt, dan wordt het licht automatisch uitgezet als je de kamer verlaat.\n\n2. **Koel de verwarming**: Gebruik warm water voor het douchen en de shower, en zet het temperaturen lager dan dat je normaal gesproken gebruikt om de verwarming te verminderen. Verwarmingsbrandstof kun je ook vastzetten op een timer.\n\n3. **Laden bij de stroom**: Zorg ervoor dat je apparaten zoals een laptop, smartphone en telefoon op een laag energylevél laden, want ze zullen het meest energie verbruiken als ze volledig geladen zijn. Je kunt ook een draadloze laadstation gebruiken om op te laden terwijl je nog in bed bent of terwijl je iets doet.\n\nDoor deze kleine aanpassingen kun je niet alleen de environmentale impact verminderen, maar ook je energierekening verlagen.",
+    "inputTokens": 39,
+    "outputTokens": 273
+  },
+  {
+    "modelId": "qwen-2.5-3b",
+    "prompt": "Wat zijn drie praktische tips om thuis energie te besparen?",
+    "promptHash": "8f3a13d2d560dd25832954786b7daa82e1928276fae4c9e90bdc2ef166bfcaec",
+    "text": "Hier zijn drie praktische en effectieve tips voor het besparen van energie bij thuis:\n\n1. Optimaliseer uw airco: Stel de temperatuur in op een zachtere stand dan waar u gewoonlijk aan hebt gezeten, om te beginnen met 25°C (77°F) of hoger als de warmte niet belangrijk is. Kies ook voor een comfortabele ventilatie door het raamidden van je woonruimte in plaats van direct uit uw airco.\n\n2. Laatst en bespaar op licht: Gebruik led-lampen in plaats van reguliere lampen. Als u al LED-lampen hebt, houd ze dan aan als hij nodig is. Een andere tip is om te gebruiken wat de 'Dark Light' functie heet. Dit brengt uw lichten automatisch uit zodra het licht buiten genoeg is.\n\n3. Het sproeien van je vloeren: Uitstekende stofwisseling helpt bij het verminderen van het door de koele geopend in uw kamer en dus een verhoogender airco vereist. Dit kan tot 25% meer energie besparen!\n\nEén doelijn is ook om regelmatig je voorwerpen te inspecteren, inclusief jouw elektriciteits- en gasapparatuurte. Als er problemen zijn met een van deze apparaten, zorgen ze voor extra uitwisseling in de loop van de dag of week. Het is altijd goed om contact op te nemen met een professionele onderdrukker.",
+    "inputTokens": 44,
+    "outputTokens": 357
+  },
+  {
+    "modelId": "claude-haiku-4-5",
+    "prompt": "Geef een recept voor een snelle vegetarische maaltijd.",
+    "promptHash": "68f1138240b2b5a3fef4f864ed7967f91afbcd119768818aa8e6ee109360d9af",
+    "text": "# Snelle Vegetarische Pasta Aglio e Olio\n\n**Bereidingstijd: 15 minuten**\n\n## Ingrediënten\n- 300g pasta\n- 6 knoflooktenen, fijngehakt\n- 100ml olijfolie\n- ½ tl rode peper (of naar smaak)\n- Zout en zwarte peper\n- Verse peterselie\n- Parmezaanse kaas (optioneel)\n\n## Bereidingswijze\n\n1. **Breng water aan de kook** en kook de pasta gaar volgens pakjesverpakking\n\n2. **Verhit de olijfolie** op laag vuur en bak de knoflook 1-2 minuten tot geurig (niet bruin!)\n\n3. **Voeg rode peper toe** en roer goed door\n\n4. **Giet pasta af** (spaar 1 kopje pastakookwater)\n\n5. **Meng pasta in het knoflook-oliemengsel** en voeg wat pastakookwater toe voor saus\n\n6. **Kruid met zout en peper**, bestrooi met peterselie en kaas\n\n**Klaar!** Simpel, smaakvol en supersnel. 🍝\n\n---\nAndere snelle opties: **stir-fry met groente**, **omelet met spinazie** of **dhal curry**. Wat spreekt je aan?",
+    "inputTokens": 24,
+    "outputTokens": 361
+  },
+  {
+    "modelId": "claude-opus-4-8",
+    "prompt": "Geef een recept voor een snelle vegetarische maaltijd.",
+    "promptHash": "68f1138240b2b5a3fef4f864ed7967f91afbcd119768818aa8e6ee109360d9af",
+    "text": "# Snelle Vegetarische Pasta met Spinazie en Tomaat\n\nEen heerlijke maaltijd die in ongeveer 20 minuten op tafel staat!\n\n## Ingrediënten (2 personen)\n- 250 gram pasta (penne of spaghetti)\n- 200 gram verse spinazie\n- 250 gram cherrytomaatjes\n- 2 teentjes knoflook\n- 1 ui\n- 100 gram Parmezaanse kaas (of vegetarisch alternatief)\n- 2 eetlepels olijfolie\n- Zout en peper\n- Optioneel: rode pepervlokken, verse basilicum\n\n## Bereiding\n\n1. **Kook de pasta** volgens de aanwijzingen op de verpakking in ruim gezouten water.\n\n2. **Snijd de groenten:** Snipper de ui fijn, pers de knoflook en halveer de cherrytomaatjes.\n\n3. **Bak de basis:** Verhit de olijfolie in een grote pan en fruit de ui glazig. Voeg de knoflook toe en bak 1 minuut mee.\n\n4. **Voeg tomaten toe:** Doe de cherrytomaatjes erbij en bak 5 minuten tot ze zacht worden.\n\n5. **Spinazie erbij:** Voeg de spinazie toe en laat slinken (1-2 minuten).\n\n6. **Combineer:** Meng de uitgelekte pasta door de groenten. Breng op smaak met zout en peper.\n\n7. **Serveer:** Bestrooi met geraspte Parmezaanse kaas en eventueel verse basilicum.\n\n## Tips\n- Voeg witte bonen of kikkererwten toe voor extra eiwitten\n- Een scheutje balsamico geeft een lekkere extra smaak\n\nEet smakelijk! 🍝\n\nWil je nog meer vegetarische receptideeën?",
+    "inputTokens": 29,
+    "outputTokens": 647
+  },
+  {
+    "modelId": "claude-sonnet-4-6",
+    "prompt": "Geef een recept voor een snelle vegetarische maaltijd.",
+    "promptHash": "68f1138240b2b5a3fef4f864ed7967f91afbcd119768818aa8e6ee109360d9af",
+    "text": "# Snelle Vegetarische Pasta met Spinazie en Feta\n\n## Bereidingstijd: ±20 minuten\n\n---\n\n### Ingrediënten (2 personen)\n- 250 g pasta (bijv. penne of fusilli)\n- 200 g verse spinazie\n- 150 g feta\n- 2 teentjes knoflook\n- 1 blik kikkererwten (400 g)\n- Olijfolie\n- Zout, peper en chilivlokken\n\n---\n\n### Bereiding\n\n1. **Kook de pasta** volgens de aanwijzingen op de verpakking.\n2. **Verhit olijfolie** in een pan en bak de knoflook kort aan.\n3. **Voeg de kikkererwten toe** en bak ze 3 minuten mee.\n4. **Voeg de spinazie toe** en laat deze slinken.\n5. **Meng de uitgelekte pasta** door het groentemengsel.\n6. **Breng op smaak** met zout, peper en chilivlokken.\n7. **Verkruimel de feta** erover en serveer direct.\n\n---\n\n### Tips\n- 🌿 Voeg wat citroenrasp toe voor een frisse smaak\n- 🌰 Lekker met een handvol pijnboompitten\n- 🧄 Gebruik meer knoflook naar smaak\n\nEet smakelijk! 😊",
+    "inputTokens": 24,
+    "outputTokens": 384
+  },
+  {
+    "modelId": "gemini-2.5-flash",
+    "prompt": "Geef een recept voor een snelle vegetarische maaltijd.",
+    "promptHash": "68f1138240b2b5a3fef4f864ed7967f91afbcd119768818aa8e6ee109360d9af",
+    "text": "Oké, hier is een recept voor een heerlijke, snelle en vegetarische maaltijd: **Snelle Pasta met Spinazie, Ricotta en Citroen.**\n\nDit gerecht is binnen 20-25 minuten klaar, zit boordevol smaak en is verrassend vullend.\n\n---\n\n### Snelle Pasta met Spinazie, Ricotta en Citroen\n\n**Voorbereidingstijd:** 5 minuten\n**Kooktijd:** 15-20 minuten\n**Porties:** 2-3\n\n**Ingrediënten:**\n\n*   200-250 gram pasta (bijv. penne, fusilli, spaghetti of tagliatelle)\n*   2 el olijfolie\n*   2 teentjes knoflook, fijngehakt\n*   1/2 rode ui of 1 sjalot, fijngesnipperd (optioneel, voor extra smaak)\n*   200 gram verse babyspinazie\n*   250 gram ricotta\n*   Sap en rasp van 1/2 (biologische) citroen (of naar smaak)\n*   Snufje nootmuskaat (vers geraspt is het lekkerst!)\n*   Verse zwarte peper en zeezout, naar smaak\n*   Optioneel: chilivlokken voor een beetje pit\n*   Optioneel: Handje pijnboompitten, kort geroosterd in een droge pan\n*   Optioneel: Verse basilicum of peterselie, fijngehakt, voor de garnering\n*   Optioneel: Geraspte Parmezaanse kaas (of een vegetarische variant) voor erbij\n\n**Bereidingswijze:**\n\n1.  **Pasta koken:** Breng een grote pan met ruim water en een snuf zout aan de kook. Voeg de pasta toe en kook deze volgens de aanwijzingen op de verpakking al dente. Bewaar **ongeveer 150 ml kookwater** van de pasta voordat je deze afgiet.\n2.  **Aromaten fruiten:** Terwijl de pasta kookt, verwarm je de olijfolie in een ruime koekenpan of hapjespan op middelhoog vuur. Fruit hierin de fijngesneden ui of sjalot (indien gebruikt) ongeveer 2 minuten totdat deze zacht wordt. Voeg dan de gehakte knoflook toe en bak nog 1 minuut totdat het geurt. Pas op dat de knoflook niet verbrandt!\n3.  **Spinazie toevoegen:** Voeg in delen de babyspinazie toe aan de pan. De spinazie zal snel slinken. Roer regelmatig totdat alle spinazie geslonken is. Dit duurt maar een paar minuten.\n4.  **Ricotta-citroensaus maken:** Zet het vuur laag. Doe de ricotta in de pan met de spinazie en knoflook. Voeg het sap en de rasp van de citroen toe, samen met een snufje nootmuskaat, zout, peper en eventueel de chilivlokken. Roer alles goed door elkaar totdat het een romige saus wordt.\n5.  **Alles samenvoegen:** Giet de afgegoten pasta bij de saus in de pan. Voeg nu beetje bij beetje een scheutje van het bewaarde pastakookwater toe. Roer goed door, totdat de saus mooi om de pasta heen plakt en de gewenste consistentie heeft. Het kookwater zorgt ervoor dat de saus extra romig wordt en goed bindt.\n6.  **Proef en serveer:** Proef en breng op smaak met extra zout, peper, citroensap of nootmuskaat indien nodig.\n7.  Verdeel de pasta over de borden. Garneer eventueel met geroosterde pijnboompitten, verse basilicum of peterselie, en geraspte Parmezaanse kaas.\n\n**Tips & Variaties:**\n\n*   **Extra groenten:** Voeg aan het begin wat gehalveerde cherrytomaatjes toe aan de pan met de knoflook en ui voor extra kleur en smaak.\n*   **Meer proteïne:** Roer op het einde wat gekookte kikkererwten of cannellinibonen door de pasta.\n*   **Vegan optie:** Vervang de ricotta door een romige plantaardige variant (bijv. op basis van cashewnoten of amandelen) en gebruik edelgistvlokken voor een 'kazige' smaak in plaats van Parmezaan.\n*   **Noten:** Andere noten zoals walnoten of amandelschaafsel kunnen ook lekker zijn voor een crunch.\n\nEet smakelijk!",
+    "inputTokens": 16,
+    "outputTokens": 1060
+  },
+  {
+    "modelId": "llama-3.2-3b",
+    "prompt": "Geef een recept voor een snelle vegetarische maaltijd.",
+    "promptHash": "68f1138240b2b5a3fef4f864ed7967f91afbcd119768818aa8e6ee109360d9af",
+    "text": "Hieronder vind je een recept voor een snelle en lekkere vegetarische maaltijd:\n\n**Vegetarische Pasta met Tomaten en Spinazie**\n\nIngredienten:\n\n* 250g pasta van je keuze (bijv. spaghetti of fettuccine)\n* 2 grote tomaten, gehakt\n* 1 tufel spinazie\n* 1/4 cup olie\n* 2 knoflookknollen, gehakt\n* 1 theeleven zout\n* 1/2 theeleven peper\n* 1/2 theeleven basilicum\n* 100g feta-kaas (optioneel)\n\nInstructies:\n\n1. Kook de pasta volgens de aanbevelingen op de verpakking.\n2. In een grote pan heet je de olie en bak de knoflookknollen tot ze zacht roken.\n3. Voeg de gehakte tomaten toe en zout en peper naar smaak.\n4. Laat de tomaten 5-7 minuten koken, totdat ze zacht zijn en de vloeistof is verdwenen.\n5. Voeg de spinazie toe en laat ze even knalen.\n6. Breng de pasta naar boven, voeg de basilicum toe en roer alles goed door elkaar.\n7. Als je feta-kaas wilt gebruiken, kun je hem nu toevoegen en roer alles nogmaals door elkaar.\n\nDit recept is snel en gemakkelijk om te maken, maar het biedt ook een rijke en smaakvolle maaltijd. Je kunt het ook met andere groenten zoals cherrytomaten of broccoli vervolgen.",
+    "inputTokens": 40,
+    "outputTokens": 371
+  },
+  {
+    "modelId": "qwen-2.5-3b",
+    "prompt": "Geef een recept voor een snelle vegetarische maaltijd.",
+    "promptHash": "68f1138240b2b5a3fef4f864ed7967f91afbcd119768818aa8e6ee109360d9af",
+    "text": "Hier is een recept voor een snelle vegetarische maaltijd:\n\nSneller Vegetarische Chili Konijn\n\nIngrediënten:\n- 1 grote knol knoflook, gemalen\n- 300 gram groene paprika’s, doorgesneden in stokjes\n- 500 g groenten (zoals kool, komkommer of broccoli), doorgesnipperd\n- 2 kleine ringen knoflook (opties)\n- 1 pakje vegetarische chili-saus (ook bekend als sojasaus of humus), bijvoorbeeld Soja’s Vrij, met zout en peper toegevoegd. (Twee maal tot twee volle mokken voor een normaal gesneden hap)\n- 150 gram tofu, geraspeld\n- Paprika’s als garnizoens\n\nBereidingswijze:\n1. Begin met het bakken van de knol en knoflook in een pan.\n2. Voegaat dan groene paprika’s, doorgesneden groenten en resterende knoflook erdoorheen.\n3. Vervolgens voeg het geraspte tofu toe en verdun het met de vegetarische chili-saus. Zet het sausje op een vrolijk vuurtje tot de ingrediënten goed samengaan en de groenten zacht worden.\n4. Serveer met gekraakende paprika’s als garnizoens.\n5. De maaltijd is dan klaar voor afmaken.\n\nDeze maaltijd wordt gemiddeld in 30 minuten bereid, wat een snelle vegetarische maaltijd betekent.",
+    "inputTokens": 44,
+    "outputTokens": 374
+  },
+  {
+    "modelId": "claude-haiku-4-5",
+    "prompt": "Vat de Franse Revolutie samen in vijf zinnen.",
+    "promptHash": "81ef295a7a2988f89179550bc52ca07ac3297e7d57489aa4fc4027491ddd47d8",
+    "text": "# De Franse Revolutie (1789-1799)\n\nDe Franse Revolutie begon vanuit grote schulden, honger en onrechtvaardigheid in de samenleving. De derde stand (burgers en boeren) eiste meer invloed en rechten, wat leidde tot de bestorming van de Bastille in 1789. Belangrijke idealen als vrijheid, gelijkheid en broederschap werden vastgesteld in verklaringen als de Verklaring van de Rechten van de Mens. De periode werd gekenmerkt door radicalisering, het afschaffen van de monarchie en de Terreur (1793-1794) onder Robespierre. De revolutie eindigde in 1799 toen Napoleon de macht overnam en maakte echter belangrijke veranderingen in wetgeving en maatschappij permanent.",
+    "inputTokens": 22,
+    "outputTokens": 206
+  },
+  {
+    "modelId": "claude-opus-4-8",
+    "prompt": "Vat de Franse Revolutie samen in vijf zinnen.",
+    "promptHash": "81ef295a7a2988f89179550bc52ca07ac3297e7d57489aa4fc4027491ddd47d8",
+    "text": "De Franse Revolutie begon in 1789, voortgekomen uit wijdverbreide onvrede over sociale ongelijkheid, financiële crisis en het absolutistische bewind van koning Lodewijk XVI. Een belangrijk keerpunt was de bestorming van de Bastille op 14 juli 1789, gevolgd door de afschaffing van feodale privileges en de Verklaring van de Rechten van de Mens en de Burger. De revolutie leidde tot de val van de monarchie en de executie van Lodewijk XVI in 1793, waarna een periode van extreem geweld volgde die bekendstaat als de Terreur onder leiding van Robespierre. Deze chaotische fase eindigde uiteindelijk met de opkomst van Napoleon Bonaparte, die in 1799 de macht greep. De revolutie had een blijvende invloed op Europa en de wereld door het verspreiden van idealen als vrijheid, gelijkheid en broederschap.",
+    "inputTokens": 29,
+    "outputTokens": 337
+  },
+  {
+    "modelId": "claude-sonnet-4-6",
+    "prompt": "Vat de Franse Revolutie samen in vijf zinnen.",
+    "promptHash": "81ef295a7a2988f89179550bc52ca07ac3297e7d57489aa4fc4027491ddd47d8",
+    "text": "De Franse Revolutie (1789-1799) was een periode van radicale politieke en sociale omwenteling in Frankrijk, waarbij het absolutistische koningschap werd omvergeworpen. Het volk kwam in opstand tegen de ongelijkheid tussen de drie standen, waarbij de adel en geestelijkheid bevoorrecht waren ten koste van de gewone burgers. Belangrijke gebeurtenissen waren de bestorming van de Bastille in 1789, de afschaffing van de monarchie en de terechtstelling van koning Lodewijk XVI in 1793. Tijdens de Terreur onder Robespierre werden duizenden mensen als vijanden van de revolutie geëxecuteerd. De revolutie eindigde uiteindelijk met de machtsgreep van Napoleon Bonaparte in 1799 en legde de grondslag voor moderne democratische beginselen zoals vrijheid, gelijkheid en broederschap.",
+    "inputTokens": 22,
+    "outputTokens": 216
+  },
+  {
+    "modelId": "gemini-2.5-flash",
+    "prompt": "Vat de Franse Revolutie samen in vijf zinnen.",
+    "promptHash": "81ef295a7a2988f89179550bc52ca07ac3297e7d57489aa4fc4027491ddd47d8",
+    "text": "De Franse Revolutie begon in 1789 door diepe sociale ongelijkheid, economische crisis en onvrede met de absolute monarchie van Lodewijk XVI. Burgers eisten vrijheid, gelijkheid en broederschap, wat leidde tot de val van de Bastille en de uitroeping van de Rechten van de Mens. Na de afschaffing van de monarchie en de executie van Lodewijk XVI volgde een radicale fase, de Terreur, waarin politieke tegenstanders massaal werden geëxecuteerd. Hierna probeerde het Directoire enige stabiliteit te herstellen, maar faalde door corruptie en interne conflicten. Uiteindelijk greep Napoleon Bonaparte de macht in 1799, waarmee een einde kwam aan de revolutionaire periode, maar de idealen van vrijheid en gelijkheid door heel Europa verspreidde.",
+    "inputTokens": 14,
+    "outputTokens": 190
+  },
+  {
+    "modelId": "llama-3.2-3b",
+    "prompt": "Vat de Franse Revolutie samen in vijf zinnen.",
+    "promptHash": "81ef295a7a2988f89179550bc52ca07ac3297e7d57489aa4fc4027491ddd47d8",
+    "text": "De Franse Revolutie (1789-1799) was een belangrijke stap in de geschiedenis van Frankrijk en Europa. Het revolutieklokschrappen in Parijs op 14 juli 1789 markeerde het begin van een tijdperk van grote veranderingen, waaronder de afval van het oude monarchistische systeem en de instelling van de First French Republic. De Revolutie was gedomineerd door het idee van gelijkheid, vrije meningsuiting en de opkomst van de democratie. Tijdens deze periode ontstonden vooraanstaande figuren als Maximilien Robespierre en Georges Danton, die de Revolutionaire Comité van Publicke Veiligheid leidden. Eindelijk viel in 1799 Napoleon Bonaparte de dictateur, waarmee een einde kwam aan de Republiek en het begin maakte van zijn eigen imperium.",
+    "inputTokens": 41,
+    "outputTokens": 213
+  },
+  {
+    "modelId": "qwen-2.5-3b",
+    "prompt": "Vat de Franse Revolutie samen in vijf zinnen.",
+    "promptHash": "81ef295a7a2988f89179550bc52ca07ac3297e7d57489aa4fc4027491ddd47d8",
+    "text": "De Franse Revolutie, die tussen 1789 en 1799 duurde, heeft tien belangrijke jaren als cijfers kunnen worden samengevat:\n\n1789 - De Parlementaire Oorlog van Paris.\n1792 - De Franse Koning wordt overgepakt en de Republiek is geboren.\n1793 - Robespierre begint zijn hel.\n1795 - Revolutie onderbouwd met het Thermidoriërschen Verbod.\n1794 - Maximilien Robespierre wordt vermoord, het vroege einde van de revolutie.\n1796 - Napoleon Bonaparte komt op de vlucht voor de Revolutie.\n\nEenheid: De Franse Revolutie werd een complex proces dat veel verschillende periodes omvatte. Deze tien \"jaren\" zijn slechts een overschouwende samenvatting van belangrijke evenementen tijdens de revolutie, maar er zijn allerlei andere belangrijke tijdstippen in haar 10 jaar historische toestand.",
+    "inputTokens": 45,
+    "outputTokens": 251
+  }
+]
