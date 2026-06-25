@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 92" width="92" height="92" role="img" aria-label="SDG 7 — Betaalbare en schone energie">
+  <!-- TODO: vervang door de officiële SDG 7-asset (Affordable and Clean Energy). -->
+  <rect width="92" height="92" rx="2" fill="#FCC30B"/>
+  <text x="9" y="31" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="22">7</text>
+  <text x="34" y="20" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="8">AFFORDABLE</text>
+  <text x="34" y="30" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="8">AND CLEAN</text>
+  <text x="34" y="40" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="8">ENERGY</text>
+  <g stroke="#fff" stroke-width="2.4" stroke-linecap="round">
+    <circle cx="46" cy="67" r="8" fill="#fff" stroke="none"/>
+    <line x1="46" y1="50" x2="46" y2="55"/>
+    <line x1="46" y1="79" x2="46" y2="84"/>
+    <line x1="29" y1="67" x2="34" y2="67"/>
+    <line x1="58" y1="67" x2="63" y2="67"/>
+    <line x1="34" y1="55" x2="37.5" y2="58.5"/>
+    <line x1="54.5" y1="75.5" x2="58" y2="79"/>
+    <line x1="58" y1="55" x2="54.5" y2="58.5"/>
+    <line x1="37.5" y1="75.5" x2="34" y2="79"/>
+  </g>
+</svg>

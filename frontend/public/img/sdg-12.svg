@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 92" width="92" height="92" role="img" aria-label="SDG 12 — Verantwoorde consumptie en productie">
+  <!-- TODO: vervang door de officiële SDG 12-asset (Responsible Consumption and Production). -->
+  <rect width="92" height="92" rx="2" fill="#BF8B2E"/>
+  <text x="9" y="31" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="22">12</text>
+  <text x="34" y="18" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="7">RESPONSIBLE</text>
+  <text x="34" y="27" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="7">CONSUMPTION</text>
+  <text x="34" y="36" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="7">&amp; PRODUCTION</text>
+  <path
+    d="M46 67 C 42 60 33 61 33 67 C 33 73 42 74 46 67 C 50 60 59 61 59 67 C 59 73 50 74 46 67 Z"
+    fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"
+  />
+</svg>

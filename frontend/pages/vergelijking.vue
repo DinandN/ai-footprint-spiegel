@@ -94,7 +94,6 @@ async function onBack() {
             </svg>
             <span>Terug Naar Antwoorden</span>
           </button>
-          <!-- TODO: /vergelijking-per-ai bestaat nog niet (toekomstige detailweergave). -->
           <NuxtLink to="/vergelijking-per-ai" class="afs-btn-cf afs-btn-cf-primary">
             <span>Vergelijk Per AI</span>
             <IconArrow class="h-[22px] w-[22px] flex-none" />

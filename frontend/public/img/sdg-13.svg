@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 92" width="92" height="92" role="img" aria-label="SDG 13 — Klimaatactie">
+  <!-- TODO: vervang door de officiële SDG 13-asset (Climate Action). -->
+  <rect width="92" height="92" rx="2" fill="#3F7E44"/>
+  <text x="9" y="31" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="22">13</text>
+  <text x="34" y="25" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="8">CLIMATE</text>
+  <text x="34" y="35" fill="#fff" font-family="Barlow, sans-serif" font-weight="700" font-size="8">ACTION</text>
+  <g stroke="#fff" stroke-width="2.4" fill="none">
+    <path d="M30 67 C 37 58 55 58 62 67 C 55 76 37 76 30 67 Z"/>
+    <circle cx="46" cy="67" r="4.5" fill="#fff" stroke="none"/>
+  </g>
+</svg>
