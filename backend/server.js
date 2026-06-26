@@ -51,8 +51,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Er is een interne fout opgetreden." });
 });
 
-app.listen(PORT, () => {
-  console.log(`AI Footprint Spiegel API draait op http://localhost:${PORT}`);
-});
+// Only start listening when run directly (e.g. `node server.js`), so tests can
+// import the app and drive it on an ephemeral port without binding 3001.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`AI Footprint Spiegel API draait op http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;
