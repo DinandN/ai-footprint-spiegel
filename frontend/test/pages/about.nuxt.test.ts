@@ -3,7 +3,7 @@ import { mountSuspended } from "@nuxt/test-utils/runtime";
 import AboutPage from "~/pages/about.vue";
 
 describe("pages/about.vue", () => {
-  it("toont de titel en de vier secties", async () => {
+  it("toont de titel en de secties", async () => {
     const wrapper = await mountSuspended(AboutPage);
     expect(wrapper.find("h1").text()).toContain("Over Marazzi Explainable IT");
 
@@ -12,6 +12,7 @@ describe("pages/about.vue", () => {
       "Over Dit Project",
       "Wat doet dit artefact?",
       "Hoe worden de resultaten bepaald?",
+      "Methode en formules",
       "Over het team",
     ]);
   });

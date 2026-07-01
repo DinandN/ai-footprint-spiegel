@@ -8,9 +8,8 @@ withDefaults(
     title: string;
     body: string;
     source: string;
-    sourceLight?: boolean;
   }>(),
-  { highlight: "", sourceLight: false },
+  { highlight: "" },
 );
 </script>
 
@@ -23,10 +22,7 @@ withDefaults(
     <p class="mb-4 max-w-full text-base leading-[1.3] text-muted md:max-w-[52%]">
       {{ body }}
     </p>
-    <p
-      class="m-0 text-muted"
-      :class="sourceLight ? 'text-base font-light' : 'text-[12.8px]'"
-    >
+    <p class="m-0 text-[12.8px] font-normal text-muted">
       {{ source }}
     </p>
     <slot />

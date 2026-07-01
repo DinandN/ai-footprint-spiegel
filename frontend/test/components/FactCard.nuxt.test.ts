@@ -24,12 +24,13 @@ describe("components/FactCard.vue", () => {
     expect(wrapper.find("h3 span").exists()).toBe(false);
   });
 
-  it("gebruikt de lichte bron-stijl bij sourceLight", async () => {
+  it("rendert de bron in regular 12.8", async () => {
     const wrapper = await mountSuspended(FactCard, {
-      props: { title: "t", body: "b", source: "Bron: Y", sourceLight: true },
+      props: { title: "t", body: "b", source: "Bron: Y" },
     });
     const source = wrapper.findAll("p").at(-1)!;
-    expect(source.classes()).toContain("font-light");
+    expect(source.classes()).toContain("text-[12.8px]");
+    expect(source.classes()).toContain("font-normal");
   });
 
   it("rendert de CTA uit de default slot", async () => {

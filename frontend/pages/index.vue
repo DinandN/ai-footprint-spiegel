@@ -67,7 +67,6 @@
           title="meer water gebruik dan een google-zoekopdracht."
           body="AI gebruikt tot 10 keer meer water dan een Google-zoekopdracht."
           source="Bron: Obama, B. 2023"
-          :source-light="true"
         />
 
         <FactCard
